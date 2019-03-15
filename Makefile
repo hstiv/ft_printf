@@ -28,7 +28,7 @@ $(NAME):
 		-I $(HEAD) \
 		-c $(SRC)/ft_print.c $(SRC)/main.c $(SRC)/ft_type_s.c \
 		$(SRC)/ft_type_d.c $(SRC)/ft_parsing.c $(SRC)/ft_prn_lst.c \
-		$(SRC)/ft_pars_flag.c
+		$(SRC)/ft_pars_flag.c $(SRC)/ft_spaces_nol.c
 		@mv *.o obj/
 		@cd $(LFT) && make && cd -
 		@gcc  \

@@ -18,15 +18,7 @@ int		ft_type_d(const char *format, va_list ap, int i, t_pf_list *base)
 
 	num = va_arg(ap, int);
 	base->len_str = ft_numlen(num);
-	if (base->len_str < base->acc)
-	{
-		// колличество нулей
-	}
-	if (base->len_str + base->acc < base->width)
-	{
-		// пробелый
-
-	}
+	ft_spaces_nol(base);
 	if (base->plus == 1 && num >= 0)
 	{
 		ft_putchar('+');
@@ -42,6 +34,7 @@ int		ft_type_d(const char *format, va_list ap, int i, t_pf_list *base)
 		ft_putnbr(num);
 		base->len += base->len_str;
 	}
+	ft_spaces_nol(base);
 	i++;
 	return (i);
 }
