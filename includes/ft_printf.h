@@ -38,7 +38,7 @@ int				ft_printf(const char *format, ...);
 int     ft_parsing_prnt(const char *format, va_list ap, t_pf_list *base);
 static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base);
 
-
+void			ft_ftoa(float n, int afterpoint);
 int				ft_strclen(char *str, char c);
 void			ft_spaces_nol(t_pf_list *base);
 int     		ft_pars_flag(t_pf_list *base, const char *format);

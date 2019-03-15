@@ -38,6 +38,5 @@ int		ft_type_s(const char *format, va_list ap, int i, t_pf_list *base)
 			}
 	}
 	format++;
-	i++;
-	return (i);
+	return (++i);
 }

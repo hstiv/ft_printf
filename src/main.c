@@ -31,6 +31,7 @@ int		main()
 	// printf( "%0*.*f\n", 8, 4, 2.5 );
 	// printf( "%0*.*f\n", 0, 4, 2.5 );
 	// printf( "%0*f\n", 0, 2.5 );
+	ft_ftoa(2.24, 0);
 	return(0);
 }
 
