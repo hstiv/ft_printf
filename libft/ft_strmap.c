@@ -3,30 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 19:11:30 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/12 18:20:51 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/27 13:14:07 by hharrold          #+#    #+#             */
+/*   Updated: 2018/11/30 19:09:14 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
 
-char				*ft_strmap(char const *s, char (*f)(char))
+char	*ft_strmap(char const *s, char (*f)(char))
 {
-	char			*str;
-	int				i;
+	int		a;
+	char	*str;
 
-	i = 0;
-	if (!f || !s)
-		return (NULL);
-	if (!(str = ft_strnew(ft_strlen((char *)s))))
-		return (NULL);
-	while (s[i] != '\0')
+	a = 0;
+	if (s)
 	{
-		str[i] = (*f)(s[i]);
-		i++;
+		while (s[a] != '\0')
+			a++;
+		if (!(str = (char*)malloc(sizeof(*str) * (a + 1))))
+			return (NULL);
+		a = 0;
+		while (s[a] != '\0')
+		{
+			str[a] = (*f)(s[a]);
+			a++;
+		}
+		str[a] = '\0';
+		return (&str[0]);
 	}
-	return (str);
+	else
+		return (NULL);
 }

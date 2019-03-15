@@ -3,35 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 16:31:45 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/13 13:48:37 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/22 19:12:48 by hharrold          #+#    #+#             */
+/*   Updated: 2018/11/29 17:36:38 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 
-void				*ft_memmove(void *dest, const void *source, size_t len)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
-	size_t			i;
+	size_t			a;
+	unsigned char	*str1;
+	unsigned char	*str2;
 
-	if (source == dest)
-		return (dest);
-	if (source < dest)
+	str1 = (unsigned char*)dst;
+	str2 = (unsigned char*)src;
+	a = 0;
+	if (str2 < str1)
 	{
-		i = len;
-		while (i-- > 0)
-			*(unsigned char *)(dest + i) = *(unsigned char *)(source + i);
+		while (a < len)
+		{
+			a++;
+			str1[len - a] = str2[len - a];
+		}
 	}
 	else
 	{
-		i = 0;
-		while (i < len)
+		while (a < len)
 		{
-			*(unsigned char *)(dest + i) = *(unsigned char *)(source + i);
-			i++;
+			str1[a] = str2[a];
+			a++;
 		}
 	}
-	return (dest);
+	return (dst);
 }

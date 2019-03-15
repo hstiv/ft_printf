@@ -3,31 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 19:53:37 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/08 19:51:47 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/27 15:14:07 by hharrold          #+#    #+#             */
+/*   Updated: 2018/11/30 19:29:50 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include "libft.h"
-#include <string.h>
 
-char				*ft_strjoin(char const *s1, char const *s2)
+static int	ft_stlen(char *str)
 {
-	char			*str;
-	size_t			i;
+	int	a;
 
-	if (!s1)
+	a = 0;
+	while (str[a])
+		a++;
+	return (a);
+}
+
+char		*ft_strjoin(char const *s1, char const *s2)
+{
+	int		a;
+	int		b;
+	char	*str;
+
+	a = 0;
+	b = 0;
+	if (!s1 || !s2)
 		return (NULL);
-	if (!s2)
-		return (ft_strdup(s1));
-	i = ft_strlen((char *)s1) + ft_strlen((char *)s2);
-	str = (char *)malloc(sizeof(*str) * (i + 1));
-	if (str == NULL)
+	if (!(str = (char*)malloc(sizeof(*str) *
+					(ft_stlen((char*)s1) + ft_stlen((char*)s2)) + 1)))
 		return (NULL);
-	ft_strcpy(str, s1);
-	ft_strcat(str, s2);
-	return (str);
+	while (s1[a] != '\0')
+	{
+		str[a] = s1[a];
+		a++;
+	}
+	while (s2[b] != '\0')
+	{
+		str[a++] = s2[b++];
+	}
+	str[a] = '\0';
+	return (&str[0]);
 }

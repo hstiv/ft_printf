@@ -1,32 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_char.c                                    :+:      :+:    :+:   */
+/*   ft_lstfrdel.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 17:08:12 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/07 20:31:44 by hstiv            ###   ########.fr       */
+/*   Created: 2018/12/07 15:56:01 by hharrold          #+#    #+#             */
+/*   Updated: 2018/12/07 16:10:03 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
 
-size_t				ft_count_char(char const *s, char c)
+void	ft_lstfrdel(void *content, size_t content_size)
 {
-	size_t			i;
-
-	i = 0;
-	while (*s != '\0')
-	{
-		if (*s != c && *s != '\0')
-		{
-			i++;
-			while (*s != c && *s != '\0')
-				s++;
-		}
-		else
-			s++;
-	}
-	return (i);
+	content_size = 0;
+	free(content);
 }

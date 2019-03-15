@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 19:04:05 by hstiv             #+#    #+#             */
-/*   Updated: 2018/12/19 19:17:21 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/27 13:01:34 by hharrold          #+#    #+#             */
+/*   Updated: 2018/11/30 19:01:42 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void				ft_strclr(char *s)
+void	ft_strclr(char *s)
 {
-	int				i;
+	int		a;
 
-	if (!s)
-		return ;
-	i = 0;
-	while (s[i + 1] != '\0')
-		i++;
-	while (i >= 0)
+	a = 0;
+	if (s)
 	{
-		s[i] = '\0';
-		i--;
+		while (s[a] != '\0')
+		{
+			s[a] = '\0';
+			a++;
+		}
 	}
 }

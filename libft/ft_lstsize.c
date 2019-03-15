@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_arraydel.c                                      :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/14 14:29:41 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/14 14:30:54 by hstiv            ###   ########.fr       */
+/*   Created: 2018/12/05 16:22:41 by hharrold          #+#    #+#             */
+/*   Updated: 2018/12/05 17:37:31 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_arraydel(void **array)
+int		ft_lstsize(t_list **alst)
 {
-	if (array && *array)
-		if (*(array + 1))
-			ft_arraydel(array + 1);
-	if (array)
-		ft_memdel(&*array);
+	int		len;
+	t_list	*tmp;
+
+	len = 0;
+	tmp = *alst;
+	if (!tmp)
+		return (0);
+	while (tmp != NULL)
+	{
+		tmp = tmp->next;
+		len++;
+	}
+	return (len);
 }

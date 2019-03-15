@@ -3,24 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 19:25:09 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/14 14:52:39 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/26 13:47:51 by hharrold          #+#    #+#             */
+/*   Updated: 2018/11/29 21:39:11 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <string.h>
 
-char		*ft_strnstr(const char *s1, const char *s2, size_t len)
+char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
-	size_t	i;
+	size_t	a;
+	size_t	b;
+	size_t	c;
 
-	i = ft_strlen(s2);
-	while (!*s2 || (*s1 && i <= len--))
-		if (*s2 == '\0')
-			return ((char *)s1);
-		else if (!(ft_strncmp(s1++, s2, i)))
-			return ((char *)s1 - 1);
-	return (NULL);
+	a = 0;
+	b = 0;
+	if (needle[0] == '\0')
+		return ((char*)&haystack[0]);
+	while (a < len && haystack[a] != '\0' && needle[b] != '\0')
+	{
+		c = a;
+		while (haystack[c] == needle[b] && c < len)
+		{
+			if (haystack[c++] == '\0' || needle[b++] == '\0')
+				break ;
+		}
+		if (needle[b] == '\0')
+			return ((char*)&haystack[a]);
+		b = 0;
+		a++;
+	}
+	return ((char*)0);
 }

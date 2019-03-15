@@ -3,36 +3,47 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/11 16:16:58 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/13 16:03:29 by hstiv            ###   ########.fr       */
+/*   Created: 2018/12/02 17:13:15 by hharrold          #+#    #+#             */
+/*   Updated: 2018/12/07 16:00:24 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdlib.h>
+
+static void		ft_freedel(void *content, size_t content_size)
+{
+	content_size = 0;
+	free(content);
+}
 
 t_list			*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	t_list		*new;
-	t_list		*root;
+	t_list		*tmp;
+	t_list		*copy;
+	t_list		*begin;
 
-	while (lst && f)
+	if (!lst || !f)
+		return (NULL);
+	tmp = 0;
+	copy = (*f)(lst);
+	if (!(tmp = ft_lstnew(copy->content, copy->content_size)))
+		return (NULL);
+	lst = lst->next;
+	begin = tmp;
+	while (lst != NULL)
 	{
-		if (!(new = f(lst)))
-			return (NULL);
-		root = new;
-		while (lst->next)
+		copy = (*f)(lst);
+		if (!(tmp->next = ft_lstnew(copy->content, copy->content_size)))
 		{
-			lst = lst->next;
-			if (!(new->next = f(lst)))
-			{
-				ft_lstdel(&root, &ft_dellst);
-				return (NULL);
-			}
-			new = new->next;
+			ft_lstdel(&begin, ft_freedel);
+			return (NULL);
 		}
 		lst = lst->next;
+		tmp = tmp->next;
+		copy = lst;
 	}
-	return (root);
+	return (begin);
 }

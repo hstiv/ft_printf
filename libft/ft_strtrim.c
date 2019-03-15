@@ -3,48 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/29 14:05:30 by hstiv             #+#    #+#             */
-/*   Updated: 2018/12/31 13:48:17 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/27 15:58:42 by hharrold          #+#    #+#             */
+/*   Updated: 2018/12/01 12:43:14 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stdlib.h>
 
-static	int		ft_memory(char const *s)
+static int		ft_strlentrim(char *str)
 {
-	int			l;
+	int	a;
+	int	b;
 
-	l = ft_strlen(s);
-	while (s[l - 1] == ' ' || s[l - 1] == '\t' || s[l - 1] == '\n')
-		l--;
-	return (l);
+	a = 0;
+	b = 0;
+	while (str[a] == ' ' || str[a] == '\n' || str[a] == '\t')
+		a++;
+	while (str[a] != '\0')
+	{
+		a++;
+		b++;
+	}
+	a--;
+	while (str[a] == ' ' || str[a] == '\n' || str[a] == '\t')
+	{
+		a--;
+		b--;
+	}
+	if (b < 0)
+		b = 0;
+	return (b);
+}
+
+static int		ft_stlen(char *str)
+{
+	int		a;
+
+	a = 0;
+	while (str[a])
+		a++;
+	a--;
+	return (a);
 }
 
 char			*ft_strtrim(char const *s)
 {
-	char		*s1;
-	int			i;
-	int			l;
+	int		a;
+	int		b;
+	int		c;
+	char	*str;
 
+	a = 0;
+	c = 0;
 	if (!s)
 		return (NULL);
-	i = -1;
-	l = ft_memory(s);
-	while (s[++i] == ' ' || s[i] == '\n' || s[i] == '\t')
-		l--;
-	if (l < 0)
-		l = 0;
-	if (!(s1 = (char *)malloc(sizeof(char) * (l + 1))))
+	if (!(str = (char*)malloc(sizeof(*str) * ft_strlentrim((char*)s) + 1)))
 		return (NULL);
-	s += i;
-	i = -1;
-	while (++i < l)
+	str[a] = '\0';
+	if (ft_strlentrim((char*)s) != 0)
 	{
-		s1[i] = *s;
-		s++;
+		while (s[a] == ' ' || s[a] == '\n' || s[a] == '\t')
+			a++;
+		b = ft_stlen((char*)s);
+		while (s[b] == ' ' || s[b] == '\n' || s[b] == '\t')
+			b--;
+		while (a <= b)
+			str[c++] = s[a++];
 	}
-	s1[i] = '\0';
-	return (s1);
+	str[c] = '\0';
+	return (&str[0]);
 }

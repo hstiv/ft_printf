@@ -3,55 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/08 13:50:38 by hstiv             #+#    #+#             */
-/*   Updated: 2018/12/31 13:43:34 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/26 15:44:19 by hharrold          #+#    #+#             */
+/*   Updated: 2018/12/07 14:21:52 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-static int			ft_atoi_if(long long int sign)
+int		ft_atoi(const char *str)
 {
-	if (sign > 0)
-		return (-1);
-	return (0);
-}
+	int							z;
+	int							a;
+	long long unsigned int		nb;
+	long long unsigned int		nb2;
 
-static int			ft_atoi_maker(long long int sign, const char *n)
-{
-	long long int	res;
-	long long int	check;
-
-	res = 0;
-	check = 0;
-	while (48 <= *n && *n <= 57)
+	a = 0;
+	z = 1;
+	nb = 0;
+	nb2 = 0;
+	while ((str[a] >= 9 && str[a] <= 13) || str[a] == ' ')
+		a++;
+	if (str[a] == '+' || str[a] == '-')
 	{
-		check = res;
-		res *= 10;
-		if (check != res / 10)
-			return (ft_atoi_if(sign));
-		res += *n - '0';
-		n++;
-		if (res < 0)
-			return (ft_atoi_if(sign));
+		if (str[a++] == '-')
+			z = -1;
 	}
-	return (res * sign);
-}
-
-int					ft_atoi(const char *n)
-{
-	long long int	sign;
-
-	sign = 1;
-	while ((9 <= *n && *n <= 13) || *n == 32)
-		n++;
-	if (*n == '-' || *n == '+')
+	while (str[a] >= '0' && str[a] <= '9')
 	{
-		if (*n == '-')
-			sign = -1;
-		n++;
+		nb = nb * 10 + ((str[a++] - '0'));
+		if (nb > 9223372036854775807 || nb / 10 != nb2)
+			return (z > 0 ? -1 : 0);
+		nb2 = nb;
 	}
-	return (ft_atoi_maker(sign, n));
+	nb = (long long int)nb * z;
+	return (nb);
 }

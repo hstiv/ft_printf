@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlenc.c                                       :+:      :+:    :+:   */
+/*   ft_strupper.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/15 17:12:48 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/08 20:23:28 by hstiv            ###   ########.fr       */
+/*   Created: 2018/12/04 19:53:37 by hharrold          #+#    #+#             */
+/*   Updated: 2018/12/05 12:06:13 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t				ft_strlenc(char const *s, char c)
+char	*ft_strupper(char *str)
 {
-	size_t			i;
+	int		i;
 
 	i = 0;
-	while (s[i] != '\0' && s[i] != c)
+	if (!str)
+		return (NULL);
+	while (str[i] != '\0')
+	{
+		if (str[i] >= 'a' && str[i] <= 'z')
+			str[i] -= 'a' - 'A';
 		i++;
-	return (i);
+	}
+	return (&str[0]);
 }

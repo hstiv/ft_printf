@@ -3,35 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 21:25:54 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/06 13:34:29 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/30 17:47:03 by hharrold          #+#    #+#             */
+/*   Updated: 2018/11/30 19:06:15 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include "libft.h"
 
-void				ft_putnbr(int n)
+void	ft_putnbr(int n)
 {
-	if (!n || (n > 2147483647 && n < -2147483648))
-		n = 0;
-	if (n == -2147483648)
-	{
-		ft_putstr("-2147483648");
-		return ;
-	}
 	if (n < 0)
 	{
-		n = n * (-1);
-		ft_putchar('-');
+		write(1, "-", 1);
+		if (n == -2147483648)
+		{
+			ft_putnbr(214748364);
+			ft_putnbr(8);
+		}
+		else
+		{
+			n = n * -1;
+			ft_putnbr(n);
+		}
 	}
-	if (n < 10)
-		ft_putchar(n + '0');
+	else if (n <= 9)
+	{
+		n = n + '0';
+		write(1, &n, 1);
+	}
 	else
 	{
 		ft_putnbr(n / 10);
-		ft_putchar((n % 10) + '0');
+		ft_putnbr(n % 10);
 	}
 }

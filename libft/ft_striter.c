@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_striter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/05 19:05:58 by hstiv             #+#    #+#             */
-/*   Updated: 2018/12/19 19:17:01 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/27 13:04:42 by hharrold          #+#    #+#             */
+/*   Updated: 2018/12/04 17:57:44 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void				ft_striter(char *s, void (*f)(char *))
+void	ft_striter(char *s, void (*f)(char*))
 {
-	unsigned int	i;
+	int		a;
 
-	i = 0;
+	a = 0;
 	if (!s || !f)
 		return ;
-	while (s[i] != '\0')
+	while (s[a] != '\0')
 	{
-		(*f)(&s[i]);
-		i++;
+		(*f)(&s[a]);
+		a++;
 	}
 }

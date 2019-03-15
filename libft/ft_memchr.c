@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/06 16:38:00 by hstiv             #+#    #+#             */
-/*   Updated: 2019/01/13 13:51:35 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/23 13:49:38 by hharrold          #+#    #+#             */
+/*   Updated: 2018/11/28 15:29:21 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <string.h>
 
-void				*ft_memchr(const void *s, int c, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	while (n--)
+	size_t	a;
+
+	a = 0;
+	while (a < n)
 	{
-		if (*((unsigned char *)s) == (unsigned char)c)
-			return ((unsigned char *)s);
-		else
-			s++;
+		if ((((unsigned char*)s)[a]) == (unsigned char)c)
+			return (&(((void*)s)[a]));
+		a++;
 	}
 	return (NULL);
 }
