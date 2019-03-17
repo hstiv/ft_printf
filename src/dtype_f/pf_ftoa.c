@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ftoa.c                                          :+:      :+:    :+:   */
+/*   pf_ftoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 19:40:40 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 20:17:33 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-static void		prestr_maker(t_pf_list *base, char *str)
+static int		prestr_maker(t_pf_list *base, char *str)
 {
 	int			l;
 	int			i;
@@ -22,17 +22,20 @@ static void		prestr_maker(t_pf_list *base, char *str)
 	l = base->width - (base->wid_bool + base->acc);
 	if (l > 0)
 	{
-		while (l >= i++ && base->nol != 0)
+		if (base->nol != 0)
+			while (l >= i && base->nol != 0)
+			{
+				str[i] = '0';
+				i++;
+			}
+		while (l >= i)
 		{
-			*str = '0';
-			str++;
+			str[i] = ' ';
+			i++;
 		}
-		while (l >= i++)
-		{
-			*str = ' ';
-			str++;
-		}
+		return (i);
 	}
+	return (0);
 }
 
 static int		ft_str_size(double n, t_pf_list *base)
@@ -62,8 +65,8 @@ static void		ft_convert_rest(char *str, double n, t_pf_list *base, int dot)
 {
 	size_t		i;
 
-	i = 0;
-	prestr_maker(base, str);
+	i = prestr_maker(base, str);
+	str = str + i;
 	while (dot--)
 	{
 		n *= 10;
@@ -75,7 +78,7 @@ static void		ft_convert_rest(char *str, double n, t_pf_list *base, int dot)
 	{
 		*str = '.';
 		str++;
-		while (base->acc--)
+		while (base->acc-- > 0)
 		{
 			n *= 10;
 			*str = (int)n + '0';
@@ -129,6 +132,7 @@ void			pf_ftoa(double n, t_pf_list *base)
 		str = (char *)malloc(sizeof(double) * l + 1);
 	if (str)
 		ft_convert(str, n, base);
+	str[l] = '\0';
 	ft_putstr(str);
 	free(str);
 }
