@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_pow.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/23 19:07:09 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 01:22:44 by hstiv            ###   ########.fr       */
+/*   Created: 2019/03/17 02:13:38 by hstiv             #+#    #+#             */
+/*   Updated: 2019/03/17 02:27:02 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "libft.h"
 
-char	*ft_strcat(char *s1, const char *s2)
+double			ft_pow(double x, int y)
 {
-	size_t	a;
-	size_t	b;
+	double		z;
 
-	a = 0;
-	b = 0;
-	while (s1[a] != '\0')
-		a++;
-	while (s2[b] != '\0')
-		s1[a++] = s2[b++];
-	s1[a] = '\0';
-	return (s1);
+	z = 1.0;
+	while (y > 0)
+	{
+		while (!(y & 1))
+		{
+			y >>= 2;
+			x *= x;
+		}
+		y -= 1;
+		z *= x;
+	}
+	return (z);
 }

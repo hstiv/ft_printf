@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/21 13:48:52 by hharrold          #+#    #+#             */
-/*   Updated: 2018/12/07 18:15:25 by hharrold         ###   ########.fr       */
+/*   Updated: 2019/03/17 02:27:22 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include <string.h>
 # include <unistd.h>
 
+double				ft_pow(double x, int y);
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memcpy(void *dst, const void *src, size_t n);

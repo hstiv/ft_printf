@@ -1,78 +1,92 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_ftoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
+/*   Updated: 2019/03/17 03:10:17 by hstiv            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
+#include "libft.h"
 
-static void     reverse_string(char *str, int len)
+static int		ft_str_size(double n, size_t prec)
 {
-    int         i;
-    int         j;
-    int         t;
+	int			len;
+	int			dot;
 
-    i = 0;
-    j = i - 1;
-    while (i < j)
-    {
-        t = str[i];
-        str[i] = str[j];
-        str[j] = t;
-        i++;
-        j--;
-    }
+	len = 0;
+	dot = 0;
+	if (n < 0)
+	{
+		len++;
+		n = -n;
+	}
+	while (n >= 1)
+	{
+		len++;
+		n /= 10;
+	}
+	if (prec > 0)
+		len++;
+	len += prec;
+	return (len);
 }
 
-static char     *fpart_to_print(float x, char *str, int d)
+static void		ft_convert_rest(char *str, double n, size_t prec, int dot)
 {
-    int         i;
-    int         l;
-    char        *s;
-
-    l = 0;
-    i = 0;
-    while (x)
-    {
-        x = x * 10;
-        i += (int)x;
-        i *= 10;
-        x = (int)x % 10;
-    }
-    while (d--)
-        i = i * 10;
-    while (i)
-    {
-        s[l++] = (i % 10) + '0';
-        i = i / 10;
-    }
-    reverse_string(s, l);
-    return (ft_strcat(str, s));
+	size_t		i;
+	
+	i = 0;
+	while (dot--)
+	{
+		n *= 10;
+		*str = (int)n + '0';
+		str++;
+		n -= (int)n;
+	}
+	if (prec > 0)
+	{
+		*str = '.';
+		str++;
+		while (i++ < prec)
+		{
+			n *= 10;
+			*str = (int)n + '0';
+			str++;
+			n -= (int)n;
+		}
+	}
+	*str = '\0';
 }
 
-static int      ipart_to_print(int x, int d, char *str)
+static void		ft_convert(char	*str, double n, size_t prec)
 {
-    int         i;
+	int			dot;
 
-    i = 0;
-    while(x)
-    {
-        str[i] = (x % 10) + '0';
-        i++;
-        x = x / 10;
-    }
-    reverse_string(str, i);
-    return (i);    
+	dot = 0;
+	if (n < 0)
+	{
+		*str = '-';
+		n = -n;
+		str++;
+	}
+	while (n >= 1 && dot++ >= 0)
+		n /= 10;
+	ft_convert_rest(str, n, prec, dot);
 }
 
-void            ft_ftoa(float n, int afterpoint)
+void			ft_ftoa(double n, int prec)
 {
-    int         ipart;
-    float       fpart;
-    char        *str;
-    int         i;
+	char		*str;
 
-    ipart = (int)n;
-    fpart = n - (float)ipart;
-    i = ipart_to_print(ipart, 0, str);
-    if (fpart > 0)
-    {
-        str[i] = '.';
-        str = fpart_to_print(fpart, str, afterpoint);
-    }
-    ft_putstr(str);
+	str = NULL;
+	str = (char *)malloc(sizeof(*str) * ft_str_size(n, prec) + 1);
+	if (str)
+		ft_convert(str, n, prec);
+	ft_putstr(str);
+	free(str);
 }

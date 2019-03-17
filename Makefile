@@ -6,41 +6,35 @@
 #    By: hharrold <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/21 16:38:05 by hharrold          #+#    #+#              #
-#    Updated: 2019/03/14 18:55:39 by hstiv            ###   ########.fr        #
+#    Updated: 2019/03/17 01:10:13 by hstiv            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = ft_printf
 
-SRC = src
+SRC = src/ft_printf.c src/main.c src/ft_type_s.c src/ft_type_d.c src/ft_parsing.c \
+	  src/ft_prn_lst.c src/ft_pars_flag.c src/ft_spaces_nol.c src/ft_ftoa.c $(LFT)
 
-HEAD = ./includes/
+HEAD = includes/
 
-OBG = ./obj/*.o
+LFT = libft/libft.a
 
-LFT = libft
+OBG = obj/*.o
+
+#FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME):
-		@mkdir obj
-		@gcc \
-		-I $(HEAD) \
-		-c $(SRC)/ft_print.c $(SRC)/main.c $(SRC)/ft_type_s.c \
-		$(SRC)/ft_type_d.c $(SRC)/ft_parsing.c $(SRC)/ft_prn_lst.c \
-		$(SRC)/ft_pars_flag.c $(SRC)/ft_spaces_nol.c $(SRC)/ft_ftoa.c
-		@mv *.o obj/
-		@cd $(LFT) && make && cd -
-		@gcc  \
-		$(OBG) $(LFT)/libft.a -o $(NAME)
-		@echo COMPILED!
-	#-Wall -Wextra -Werror #
+		mkdir obj
+		make -C libft re && gcc -o $(NAME) $(SRC) -I $(HEAD)
+		mv *.o obj/
+		echo COMPILED!
 clean:
-		@rm -rf $(OBJ)
-		@cd $(LFT) && make fclean && cd -
+		rm -rf *.o $(OBJ)
+		make -C libft fclean
 
 fclean: clean
-		@rm -rf obj/
-		@rm -rf ft_printf
+		rm -rf $(NAME) obj
 
 re: fclean all

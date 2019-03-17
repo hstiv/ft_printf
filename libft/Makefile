@@ -6,7 +6,7 @@
 #    By: hharrold <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/11/21 10:39:56 by hharrold          #+#    #+#              #
-#    Updated: 2018/11/22 16:05:31 by hharrold         ###   ########.fr        #
+#    Updated: 2019/03/17 00:56:38 by hstiv            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,19 @@ NAME = libft.a
 
 SRC = *.c
 
-HEAD = ./
-
 OBG = *.o
 
 all: $(NAME)
 
 $(NAME):
-	@gcc -Wall -Wextra -Werror -I $(HEAD) -c $(SRC)
-	@ar r $(NAME) $(OBG)
+	gcc -Wall -Wextra -Werror -c $(SRC) -I ../includes
+	ar r $@ $(OBG)
+	ranlib $@
 
 clean:
-	@rm -f $(OBG)
+	rm -f $(OBG)
 
 fclean: clean
-	@rm -f $(NAME)
+	rm -f $(NAME)
 
 re: fclean all
