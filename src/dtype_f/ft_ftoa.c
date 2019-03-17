@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 19:30:36 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 19:40:40 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ static void		prestr_maker(t_pf_list *base, char *str)
 
 	i = 0;
 	l = base->width - (base->wid_bool + base->acc);
-//	ft_putnbr(l);
-//	ft_putchar('\n');
 	if (l > 0)
 	{
 		while (l >= i++ && base->nol != 0)
@@ -63,7 +61,7 @@ static int		ft_str_size(double n, t_pf_list *base)
 static void		ft_convert_rest(char *str, double n, t_pf_list *base, int dot)
 {
 	size_t		i;
-	
+
 	i = 0;
 	prestr_maker(base, str);
 	while (dot--)
@@ -88,7 +86,7 @@ static void		ft_convert_rest(char *str, double n, t_pf_list *base, int dot)
 	*str = '\0';
 }
 
-static void		ft_convert(char	*str, double n, t_pf_list *base)
+static void		ft_convert(char *str, double n, t_pf_list *base)
 {
 	int			dot;
 

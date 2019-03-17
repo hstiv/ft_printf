@@ -6,7 +6,7 @@
 #    By: hharrold <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/21 16:38:05 by hharrold          #+#    #+#              #
-#    Updated: 2019/03/17 19:25:44 by hstiv            ###   ########.fr        #
+#    Updated: 2019/03/17 19:42:13 by hstiv            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ HEAD = includes/
 
 LFT = libft/libft.a
 
-OBJ = obj/*.o
+OBJ = ~/ft_printf/obj/*.o
 
 #FLAGS = -Wall -Wextra -Werror
 
@@ -29,7 +29,7 @@ all: $(NAME)
 $(NAME):
 		@mkdir obj
 		@make -C libft re && gcc -o $(NAME) $(SRC) -I $(HEAD)
-		@mv *.o obj/
+		@mv *.o ~/ft_printf/obj/
 		@echo COMPILED!
 clean:
 		@rm -rf obj/*.o $(OBJ)
