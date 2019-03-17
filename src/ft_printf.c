@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:34:43 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/01 14:34:45 by hharrold         ###   ########.fr       */
+/*   Updated: 2019/03/17 05:18:40 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 	int		i;
 
 	i = 0;
-	while (*format != 's' && *format != 'd')
+	while (*format != 's' && *format != 'd' && *format != 'f' && *format != 'l'
+			&& *format != 'L' && *format != 'c')
 	{
 		if (ft_pars_flag(base, format))
 		{
@@ -60,13 +61,14 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 
 static int		ft_parse_flag(const char *format, va_list ap)
 {
-	char		*str;
 	t_pf_list	*base;
 	int			i;
 
 	base = ft_create_pf_list();
 	i = ft_flag(base, format, ap);
 	format += i;
+	if (i < ft_pointed_flags(format, ap, i, base))
+		return (ft_pointed_flags(format, ap, i, base));
 	if (*format == 's')
 	{
 		i = ft_type_s(format, ap, i, base);
@@ -75,6 +77,11 @@ static int		ft_parse_flag(const char *format, va_list ap)
 	else if (*format == 'd')
 	{
 		i = ft_type_d(format, ap, i, base);
+		format++;
+	}
+	else if (*format == 'f')
+	{
+		i = ft_type_f(format, ap, i, base);
 		format++;
 	}
 	else

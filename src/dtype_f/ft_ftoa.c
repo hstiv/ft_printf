@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 03:20:06 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 06:21:19 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,5 @@ char			*ft_ftoa(double n, int prec)
 	str = (char *)malloc(sizeof(*str) * ft_str_size(n, prec) + 1);
 	if (str)
 		ft_convert(str, n, prec);
-//	ft_putstr(str);
-//	free(str);
 	return (str);
 }
