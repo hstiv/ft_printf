@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 18:33:21 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 18:54:31 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ static void		ft_convert_rest(char *str, double n, t_pf_list *base, int dot)
 		str++;
 		n -= (int)n;
 	}
-//	ft_putnbr(base->acc);
-//	ft_putchar('\n');
 	if (base->acc > 0)
 	{
 		*str = '.';
@@ -108,12 +106,12 @@ static void		ft_convert(char	*str, double n, t_pf_list *base)
 	ft_convert_rest(str, n, base, dot);
 }
 
-char			*pf_ftoa(double n, t_pf_list *base)
+void			pf_ftoa(double n, t_pf_list *base)
 {
 	char		*str;
 	int			l;
 	int			o;
-	double		t;
+	float		t;
 
 	l = 0;
 	t = n;
@@ -126,11 +124,13 @@ char			*pf_ftoa(double n, t_pf_list *base)
 	o = base->width - (l);
 	if (o > 0)
 		l += o;
-	ft_putnbr(l);
-	ft_putchar('\n');
+	base->len += l;
 	if (base->width != 0)
-		str = (char *)malloc(sizeof(*str) * (l + 1));
+		str = (char *)malloc(sizeof(double) * (l + 1));
 	if (str)
 		ft_convert(str, n, base);
-	return (str);
+	ft_putstr(str);
+	ft_putchar('\n');
+	ft_putstr(str);
+	free(str);
 }
