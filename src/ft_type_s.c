@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:04:56 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/10 15:04:58 by hharrold         ###   ########.fr       */
+/*   Updated: 2019/03/17 03:23:52 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		ft_type_s(const char *format, va_list ap, int i, t_pf_list *base)
 
 	str = va_arg(ap, char *);
 	len = ft_strlen(str);
-//	printf("\n%d\n", len);
 	if (base->acc_bool == 0)
 		ft_putstr(str);
 	else

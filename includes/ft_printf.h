@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:12:52 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 03:09:01 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 03:42:11 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@ typedef struct				s_pf_list
 }							t_pf_list;
 
 int				ft_printf(const char *format, ...);
-int    			 ft_parsing_prnt(const char *format, va_list ap, t_pf_list *base);
-void			ft_ftoa(double n, int afterpoint);
+int				ft_parsing_prnt(const char *format, va_list ap, t_pf_list *base);
+char			*ft_ftoa(double n, int afterpoint);
 int				ft_strclen(char *str, char c);
 void			ft_spaces_nol(t_pf_list *base);
-int     		ft_pars_flag(t_pf_list *base, const char *format);
+int				ft_pars_flag(t_pf_list *base, const char *format);
+int				ft_type_f(const char *format, va_list ap, int i, t_pf_list *base);
 int				ft_type_s(const char *format, va_list ap, int i, t_pf_list *base);
 int				ft_type_d(const char *format, va_list ap, int i, t_pf_list *base);
 t_pf_list		*ft_create_pf_list();
