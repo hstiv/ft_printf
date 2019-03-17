@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 15:19:19 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 05:19:14 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 07:44:08 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,7 @@ int		ft_type_d(const char *format, va_list ap, int i, t_pf_list *base)
 	int		num;
 
 	num = va_arg(ap, int);
-	base->len_str = ft_numlen(num);
-	ft_spaces_nol(base);
+	i += ft_numlen(num);
 	if (base->plus == 1 && num >= 0)
 	{
 		ft_putchar('+');
@@ -30,11 +29,8 @@ int		ft_type_d(const char *format, va_list ap, int i, t_pf_list *base)
 		ft_putnbr(num);
 	}
 	else
-	{
 		ft_putnbr(num);
-		base->len += base->len_str;
-	}
-	ft_spaces_nol(base);
+	free(base);
 	i++;
 	return (i);
 }

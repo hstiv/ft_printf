@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:34:43 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 06:55:46 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 07:41:51 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,6 @@ static int		ft_parse_flag(const char *format, va_list ap)
 	else if (*format == 'd')
 	{
 		i = ft_type_d(format, ap, i, base);
-		format++;
-	}
-	else if (*format == 'f')
-	{
-		i = ft_type_f(format, ap, i, base);
 		format++;
 	}
 	else
