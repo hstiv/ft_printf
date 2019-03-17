@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/10 19:06:42 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 00:57:31 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 18:10:21 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int     ft_pars_flag(t_pf_list *base, const char *format)
 		base->plus = 1;
 	else if (*format == '-')
 		base->minus = 1;
-  else
+	else
 		bol = 0;
     return (bol);
 }

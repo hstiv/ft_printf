@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:34:43 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 07:41:51 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 18:19:43 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,19 @@
 static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 {
 	int		i;
+	int		f;
 
 	i = 0;
+	f = 0;
 	while (*format != 's' && *format != 'd' && *format != 'f' && *format != 'l'
 			&& *format != 'L' && *format != 'c')
 	{
-		if (ft_pars_flag(base, format))
+		if (ft_pars_flag(base, format) != 0 && f == 0)
 		{
-			//format++;
+			f = 1;
 		//	printf("\nprs_flag\n");
 		}
-		else if (*format == '.')
+		if (*format == '.')
 		{
 			format++;
 			if (*format == '*')

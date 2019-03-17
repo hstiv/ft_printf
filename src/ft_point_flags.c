@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 04:50:23 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 07:43:37 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 18:07:33 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int				ft_point_flags(const char *format, va_list ap, int i, t_pf_list *base)
 {
 	t_typef		*lol;
 
-	base->len = i;
-	if ((*format == 'l' || *format == 'L') && *(format + 1) == 'f')
+	if (((*format == 'l' || *format == 'L') && *(format + 1) == 'f')
+			|| *format == 'f')
 	{
 		lol = ft_creat_flst();
 		if (*(format + 1) == 'l')
@@ -27,7 +27,7 @@ int				ft_point_flags(const char *format, va_list ap, int i, t_pf_list *base)
 			lol->ld = 1;
 		else
 			lol->f = 1;
-		return(ft_type_f(format, ap, base, lol));
+		return(ft_type_f(format, ap, base));
 	}
 	return (i);
 }

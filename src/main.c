@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:44:50 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 07:45:55 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 18:32:44 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int		main()
 //	printf("%d", printf("\n\n*** -22.33d ***\n\n"));
 //	printf("12345\n %%ss \n%s \ndsad asd \n", "fuf");
 //	printf("Le fichier{cyan}%s{eoc} contient : {red}%s{eoc}", "filename", str);
-	fprintf( "%f\n", 2.5326);
-	// printf( "%0*.*f\n", 8, 4, 2.5 );
+//	fprintf( "%.*f", 3, 2.5);
+	 printf("%*.*lf\n", 8, 4, 2.43 );
+	 ft_printf("%*.*lf\n", 8, 4, 2.43 );
 	// printf( "%0*.*f\n", 0, 4, 2.5 );
 	// printf( "%0*f\n", 0, 2.5 );
 //	ft_ftoa(2.24, 10);
