@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 18:54:31 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 19:18:56 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void		prestr_maker(t_pf_list *base, char *str)
 
 	i = 0;
 	l = base->width - (base->wid_bool + base->acc);
+//	ft_putnbr(l);
+//	ft_putchar('\n');
 	if (l > 0)
 	{
 		while (l >= i++ && base->nol != 0)
@@ -75,7 +77,7 @@ static void		ft_convert_rest(char *str, double n, t_pf_list *base, int dot)
 	{
 		*str = '.';
 		str++;
-		while (i++ < base->acc)
+		while (base->acc--)
 		{
 			n *= 10;
 			*str = (int)n + '0';
@@ -129,8 +131,6 @@ void			pf_ftoa(double n, t_pf_list *base)
 		str = (char *)malloc(sizeof(double) * (l + 1));
 	if (str)
 		ft_convert(str, n, base);
-	ft_putstr(str);
-	ft_putchar('\n');
 	ft_putstr(str);
 	free(str);
 }
