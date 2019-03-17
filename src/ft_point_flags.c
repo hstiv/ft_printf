@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 04:50:23 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 06:28:44 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 06:52:37 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,5 @@ int				ft_pointed_flags(const char *format, va_list ap, int i, t_pf_list *base)
 			lol->f = 1;
 		return(ft_type_f(format, ap, i, base, lol));
 	}
+	return (i);
 }
