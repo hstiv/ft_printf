@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 19:18:56 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 19:30:36 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void			pf_ftoa(double n, t_pf_list *base)
 		l += o;
 	base->len += l;
 	if (base->width != 0)
-		str = (char *)malloc(sizeof(double) * (l + 1));
+		str = (char *)malloc(sizeof(double) * l + 1);
 	if (str)
 		ft_convert(str, n, base);
 	ft_putstr(str);

@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:34:43 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 18:50:59 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/17 19:37:13 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,16 @@ static int		ft_parse_flag(const char *format, va_list ap)
 	i = ft_flag(base, format, ap);
 	format += i;
 	if (i < ft_point_flags(format, ap, i, base))
-		return (ft_point_flags(format, ap, i, base));
-	if (*format == 's' || *format == 'c' || *format == 'C')
-	{
+		i = ft_point_flags(format, ap, i, base);
+	else if (*format == 's' || *format == 'c' || *format == 'C')
 		i = ft_type_s(format, ap, i, base);
-		format++;
-	}
 	else if (*format == 'd')
-	{
 		i = ft_type_d(format, ap, i, base);
-		format++;
-	}
 	else
 		return (i);
 		//printf("CHECK! 7 \n"); // PRINTF
 	free(base);
+	format++;
 	return (i);
 }
 
