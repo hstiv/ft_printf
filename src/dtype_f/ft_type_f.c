@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 03:21:50 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 19:41:21 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/18 14:40:19 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ int				ft_type_f(const char *format, va_list ap, t_pf_list *base)
 		base->len = -1;
 	else
 		pf_ftoa(n, base);
+	format++;
 	return (base->len);
 }

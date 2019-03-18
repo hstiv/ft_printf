@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:34:43 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 19:37:13 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/18 18:54:46 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,13 @@
 static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 {
 	int		i;
-	int		f;
 
 	i = 0;
-	f = 0;
 	while (*format != 's' && *format != 'd' && *format != 'f' && *format != 'l'
 			&& *format != 'L' && *format != 'c')
 	{
-		if (ft_pars_flag(base, format) != 0 && f == 0)
+		if (ft_pars_flag(base, format) != 0)
 		{
-			f = 1;
 		//	printf("\nprs_flag\n");
 		}
 		if (*format == '.')
@@ -61,12 +58,10 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 	return (i);
 }
 
-static int		ft_parse_flag(const char *format, va_list ap)
+static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base)
 {
-	t_pf_list	*base;
 	int			i;
 
-	base = ft_create_pf_list();
 	i = ft_flag(base, format, ap);
 	format += i;
 	if (i < ft_point_flags(format, ap, i, base))
@@ -83,37 +78,41 @@ static int		ft_parse_flag(const char *format, va_list ap)
 	return (i);
 }
 
-int				ft_printf(const char *format, ...) // USED 
+int				ft_parsing_prnt(const char *format, va_list ap) //USED
 {
-	va_list ap;
-	int		i;
-	int		len;
+	int			len_format;
+	t_pf_list	*base;
 	
-	va_start(ap, format);
+	if (!(base = ft_create_pf_list()))
+		return (-1);
 	while (*format != '\0')
 	{
-		while (*format != '%' && *format != '\0')
+		while(*format != '%' && *format != '\0')
 		{
 			ft_putchar(*format);
 			format++;
-			i++;
+			base->len++;
 		}
-		if (*format == '%') 
+		if (*format == '%')
 		{
 			format++;
-			// if (*format == '%') // это тип переделать
-			// {
-			// 	ft_putchar('%');
-			// 	format++;
-			// }
-			// else
-		//	printf("CHECK! %%++ \n"); // PRINTF
-			len = ft_parse_flag(format, ap);
-			if (len == -1)
-				return(len);
-			format += len;
+			len_format = ft_parse_flag(format, ap, base);
+			if (len_format == -1)
+				return(-1);
+			format += len_format;
 		}
 	}
-	va_end(ap);
-	return (0);
+	return(base->len);
 }
+
+int				ft_printf(const char *format, ...) // USED
+{
+	int			result;
+	va_list		ap;
+
+	va_start(ap, format);
+	result = ft_parsing_prnt(format, ap);
+	va_end(ap);
+	return (result);
+}
+

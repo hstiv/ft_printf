@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:12:52 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/17 19:54:45 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/18 18:55:24 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ typedef struct				s_typef
 
 int				ft_point_flags(const char *format, va_list ap,int i, t_pf_list *base);
 int				ft_printf(const char *format, ...);
-int				ft_parsing_prnt(const char *format, va_list ap, t_pf_list *base);
+int				ft_parsing_prnt(const char *format, va_list ap);
 void			pf_ftoa(double n, t_pf_list *base);
 int				ft_strclen(char *str, char c);
 void			ft_spaces_nol(t_pf_list *base);

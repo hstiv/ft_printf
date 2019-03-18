@@ -6,7 +6,7 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/17 20:17:33 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/18 14:40:25 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,6 @@ void			pf_ftoa(double n, t_pf_list *base)
 		str = (char *)malloc(sizeof(double) * l + 1);
 	if (str)
 		ft_convert(str, n, base);
-	str[l] = '\0';
 	ft_putstr(str);
 	free(str);
 }
