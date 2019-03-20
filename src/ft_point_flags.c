@@ -6,28 +6,37 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 04:50:23 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/18 14:39:59 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/19 16:18:45 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
 
-int				ft_point_flags(const char *format, va_list ap, int i, t_pf_list *base)
+int				ft_point_flags(const char *format, va_list ap, int *i,
+														t_pf_list *base)
 {
-	t_typef		*lol;
+	int	bol;
 
-	if (((*format == 'l' || *format == 'L') && *(format + 1) == 'f')
-			|| *format == 'f')
+	bol = 0;
+	if (((*format == 'l' || *format == 'L')
+				&& *(format + 1) == 'f') || *format == 'f')
 	{
-		lol = ft_creat_flst();
-		if (*(format + 1) == 'l')
-			lol->d = 1;
+		if (*format == 'l')
+			base->d = 1;
 		else if (*format == 'L')
-			lol->ld = 1;
+			base->ld = 1;
 		else
-			lol->f = 1;
-		return(ft_type_f(format, ap, base));
+			base->f = 1;
+		*i += ft_type_f(format, ap, base);
+		bol = 1;
 	}
-	return (i);
+	// if (((*format == 'l' || *format == 'h')
+	// 			&& (*(format + 1) == 'd') || *(format + 1) == 'i'))
+	// 				|| (*format == 'd' || *format == 'i'))
+	// {
+	// 	*format++;
+	// 	if ((*format == 'l' || *format == 'h'))
+	// }
+	return(bol);
 }

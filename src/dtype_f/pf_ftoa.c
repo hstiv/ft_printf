@@ -6,99 +6,87 @@
 /*   By: hstiv <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:46:44 by hstiv             #+#    #+#             */
-/*   Updated: 2019/03/18 14:40:25 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/19 18:11:10 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "libft.h"
+
+static void		fstr_maker(char *str, t_pf_list *base, size_t i, long double n)
+{
+	long double	nb;
+
+	nb = 0.000001;
+	if (base->acc > 0)
+	{
+		str[i++] = '.';
+		while (base->acc > 0)
+		{
+			n *= 10;
+			if ((int)(n + nb) != 10)
+				str[i++] = (int)(n + '0' + nb);
+			else
+				str[i++] = '0';
+			base->acc--;
+			n -= (int)n;
+		}
+		if (base->temp > 0 && base->minus)
+			while (base->temp--)
+				str[i++] = ' ';
+		while (base->acc-- > 0)
+			str[i++] = '0';
+	}
+	str[i] = '\0';
+	base->len_return += (ft_strlen(str));
+	ft_putstr(str);
+}
 
 static int		prestr_maker(t_pf_list *base, char *str)
 {
-	int			l;
 	int			i;
 
 	i = 0;
-	l = base->width - (base->wid_bool + base->acc);
-	if (l > 0)
+	if ((base->plus || base->neg == 45) && base->nol)
+		str[i++] = base->neg;
+	if (base->temp > 0 && !base->minus)
 	{
 		if (base->nol != 0)
-			while (l >= i && base->nol != 0)
-			{
-				str[i] = '0';
-				i++;
-			}
-		while (l >= i)
-		{
-			str[i] = ' ';
-			i++;
-		}
+			while (base->temp > i)
+				str[i++] = '0';
+		if (base->temp > i)
+			while (base->temp > i)
+				str[i++] = ' ';
 		return (i);
 	}
-	return (0);
+	return (i);
 }
 
-static int		ft_str_size(double n, t_pf_list *base)
-{
-	int			len;
-	int			dot;
-
-	len = 0;
-	dot = 0;
-	if (n < 0)
-	{
-		len++;
-		n = -n;
-	}
-	while (n >= 1)
-	{
-		len++;
-		n /= 10;
-	}
-	if (base->acc > 0)
-		len++;
-	len += base->acc;
-	return (len);
-}
-
-static void		ft_convert_rest(char *str, double n, t_pf_list *base, int dot)
+static void		ft_convert_rest(char *str, long double n, t_pf_list *base, int dot)
 {
 	size_t		i;
 
 	i = prestr_maker(base, str);
-	str = str + i;
+	if ((base->plus || base->neg == '-') && !base->nol)
+		str[i++] = base->neg;
+	n = acczero(n, base, dot);
 	while (dot--)
 	{
 		n *= 10;
-		*str = (int)n + '0';
-		str++;
+		str[i++] = (int)n + '0';
 		n -= (int)n;
 	}
-	if (base->acc > 0)
-	{
-		*str = '.';
-		str++;
-		while (base->acc-- > 0)
-		{
-			n *= 10;
-			*str = (int)n + '0';
-			str++;
-			n -= (int)n;
-		}
-	}
-	*str = '\0';
+	fstr_maker(str, base, i, n);
 }
 
-static void		ft_convert(char *str, double n, t_pf_list *base)
+static void		ft_convert(char *str, long double n, t_pf_list *base)
 {
 	int			dot;
 
 	dot = 0;
 	if (n < 0)
 	{
-		*str = '-';
+		base->neg = 45;
 		n = -n;
-		str++;
 	}
 	while (n >= 1)
 	{
@@ -109,29 +97,27 @@ static void		ft_convert(char *str, double n, t_pf_list *base)
 	ft_convert_rest(str, n, base, dot);
 }
 
-void			pf_ftoa(double n, t_pf_list *base)
+void			pf_ftoa(long double n, t_pf_list *base)
 {
 	char		*str;
 	int			l;
-	int			o;
-	float		t;
+	int			sign;
+	long double	t;
 
-	l = 0;
 	t = n;
-	while (t >= 1)
+	sign = 0;
+	if (base->space && base->plus)
+		base->space = 0;
+	if (base->nol && base->minus)
+		base->nol = 0;
+	if (t < 0)
 	{
-		t /= 10;
-		base->wid_bool++;
+		t *= -1;
+		sign = 1;
 	}
-	l = base->wid_bool + base->acc + 1;
-	o = base->width - (l);
-	if (o > 0)
-		l += o;
-	base->len += l;
-	if (base->width != 0)
-		str = (char *)malloc(sizeof(double) * l + 1);
+	l = facc(t, base, sign);
+	str = (char *)malloc(sizeof(str) * (l + 1));
 	if (str)
 		ft_convert(str, n, base);
-	ft_putstr(str);
 	free(str);
 }

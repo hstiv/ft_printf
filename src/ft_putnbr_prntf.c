@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_prn_lst.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_prntf.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/10 17:44:14 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/19 18:25:44 by hstiv            ###   ########.fr       */
+/*   Created: 2018/11/30 17:47:03 by hharrold          #+#    #+#             */
+/*   Updated: 2018/11/30 19:06:15 by hharrold         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include <unistd.h>
 
-t_pf_list	*ft_create_pf_list()
+void	ft_putnbr_prntf(int n)
 {
-	t_pf_list	*base;
-
-	if (!(base = (t_pf_list*)malloc(sizeof(*base))))
-		return (NULL);
-	base->hew = 0;
-	base->space = 0;
-	base->plus = 0;
-	base->minus = 0;
-    base->nol = 0;
-    base->width = 0;
-    base->wid_bool = 0;
-    base->acc = 0;
-	base->acc_bool = 0;
-	base->len_return = 0;
-	base->len_flag = 0;
-	base->temp = 0;
-	base->neg = 43;
-	return(base);
+	if (n < 0)
+	{
+		if (n == -2147483648)
+		{
+			ft_putnbr_prntf(214748364);
+			ft_putnbr_prntf(8);
+		}
+		else
+		{
+			n = n * -1;
+			ft_putnbr_prntf(n);
+		}
+	}
+	else if (n <= 9)
+	{
+		n = n + '0';
+		write(1, &n, 1);
+	}
+	else
+	{
+		ft_putnbr_prntf(n / 10);
+		ft_putnbr_prntf(n % 10);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:12:52 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/18 18:55:24 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/19 18:25:01 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,27 @@ typedef struct				s_pf_list
 	int						wid_bool;
 	int						acc_bool;
 	int						acc;
-	int						len;
-	int						len_str;
-}							t_pf_list;
-
-typedef struct				s_typef
-{
+	int						len_return;
+	int						len_flag;
 	int						f;
+	int						neg;
+	int						temp;
 	int						d;
 	int						ld;
-}							t_typef;
+}							t_pf_list;
 
-
-int				ft_point_flags(const char *format, va_list ap,int i, t_pf_list *base);
+long double		acczero(long double n, t_pf_list *base, int dot);
+size_t			facc(long double n, t_pf_list *base, int sign);
+int				ft_point_flags(const char *format, va_list ap,int *i, t_pf_list *base);
 int				ft_printf(const char *format, ...);
 int				ft_parsing_prnt(const char *format, va_list ap);
-void			pf_ftoa(double n, t_pf_list *base);
+void			pf_ftoa(long double n, t_pf_list *base);
 int				ft_strclen(char *str, char c);
 void			ft_spaces_nol(t_pf_list *base);
 int				ft_pars_flag(t_pf_list *base, const char *format);
 int				ft_type_f(const char *format, va_list ap, t_pf_list *base);
 int				ft_type_s(const char *format, va_list ap, int i, t_pf_list *base);
 int				ft_type_d(const char *format, va_list ap, int i, t_pf_list *base);
+void			ft_putnbr_prntf(int n);
 t_pf_list		*ft_create_pf_list();
-t_typef			*ft_creat_flst();
 #endif

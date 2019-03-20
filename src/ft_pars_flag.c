@@ -17,7 +17,7 @@ int     ft_pars_flag(t_pf_list *base, const char *format)
     int		bol;
 
     bol = 1;
-    if (*format == '#')
+	if (*format == '#')
 		base->hew = 1;
 	else if (*format == '0')
 		base->nol = 1;
@@ -29,7 +29,7 @@ int     ft_pars_flag(t_pf_list *base, const char *format)
 		base->minus = 1;
 	else
 		bol = 0;
-    return (bol);
+	return (bol);
 }
 
 // %[флаги -+ #0 ][ширина][.точность][размер]тип
