@@ -12,6 +12,20 @@
 
 #include "ft_printf.h"
 
+long double			acnzero(long double n, t_pf_list *base)
+{
+	long double		nb;
+	
+	nb = n - (__uint128_t)n;
+	nb *= 10;
+	if ((base->acc - 1) == 0)
+	{
+		if ((__uint128_t)nb >= 5)
+			n = n + 1;
+	}
+	return (n);
+}
+
 long double			acczero(long double n, t_pf_list *base, int dot)
 {
 	int				d;

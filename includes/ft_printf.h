@@ -39,6 +39,7 @@ typedef struct				s_pf_list
 	int						ld;
 }							t_pf_list;
 
+long double		acnzero(long double n, t_pf_list *base);
 long double		acczero(long double n, t_pf_list *base, int dot);
 size_t			facc(long double n, t_pf_list *base, int sign);
 int				ft_point_flags(const char *format, va_list ap,int *i, t_pf_list *base);
