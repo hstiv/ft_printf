@@ -33,8 +33,8 @@ int		main()
 //	 printf("%*.*lf\n", 8, 4, 2.43 );
 //	 printf("\n%d\n", printf("\n*%-*.*f*\n", 15, 5, 2.43));
 //	 printf("\n%d\n", ft_printf("\n*%*.*f*\n", 15, 5, 2.43));
-	printf("\n%d\n", printf("\n*%f*\n", 2.567693674685769));
-	printf("\n%d\n", ft_printf("\n*%f*\n", 2.567693674685769));
+	printf("*%f*\n", 2.50798);
+	ft_printf("\n*%f*\n", 2.50798);
 //	ft_ftoa(2.24, 10);
 	return(0);
 }

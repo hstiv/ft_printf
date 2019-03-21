@@ -23,8 +23,8 @@ static void		fstr_maker(char *str, t_pf_list *base, size_t i, long double n)
 		while (base->acc > 0)
 		{
 			n *= 10;
-			n = acnzero(n, base);
-			if ((int)(n + nb) != 10)
+//			n = acnzero(n, base);
+			if ((int)(n + nb) != 10 && ((int)n != 10))
 				str[i++] = (int)(n + '0' + nb);
 			else
 				str[i++] = '0';

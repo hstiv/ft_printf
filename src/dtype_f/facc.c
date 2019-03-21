@@ -15,6 +15,8 @@
 static void		neg_len(size_t *l, long double *n, t_pf_list *base)
 {
 	base->wid_bool = 0;
+	if (base->plus && base->nol && !base->minus)
+		base->temp++;
 	if (*n < 0)
 	{
 		*n = *n * -1;
@@ -80,7 +82,7 @@ size_t			facc(long double n, t_pf_list *base, int sign)
 			}
 			l = base->wid_bool + base->acc;
 			base->temp += base->width - l - 1;
-			if ((base->plus == 1 && sign == 0) || sign == 1)
+			if ((base->plus == 1 && sign == 0) || (sign == 1 && !base->nol))
 				base->temp--;
 			if (base->temp > 0)
 				l += base->temp;
