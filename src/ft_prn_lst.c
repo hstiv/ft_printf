@@ -31,5 +31,12 @@ t_pf_list	*ft_create_pf_list()
 	base->len_flag = 0;
 	base->temp = 0;
 	base->neg = 43;
+	base->d = 0;
+	base->ld = 0;
+	base->f = 0;
+	base->num_l = 0;
+	base->num_ll = 0;
+	base->num_h = 0;
+	base->num_hh = 0;
 	return(base);
 }

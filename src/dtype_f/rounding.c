@@ -26,27 +26,14 @@ long double			acnzero(long double n, t_pf_list *base)
 	return (n);
 }
 
-long double			acczero(long double n, t_pf_list *base, int dot)
+int					acczero(char c)
 {
-	int				d;
-	long double		nb;
+	float			nb;
 
-	d = dot * 10;
-	nb = 0;
-	if (base->acc == 0)
-		if ((((int)n / 2) % 10) == 0)
-		{
-			while (dot--)
-			{
-				nb *= 10;
-				n *= 10;
-				nb += (int)n;
-				n -= (int)n;
-			}
-			n *= 10;
-			if ((int)n >= 5)
-				nb += 1;
-			return (nb * dot);
-		}
-		return (n);
+	nb = c - '0';
+	nb = nb / 2;
+	if (nb != (int)nb)
+		return (1);
+	else
+		return (0);
 }

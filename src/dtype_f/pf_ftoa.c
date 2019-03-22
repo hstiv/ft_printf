@@ -17,27 +17,30 @@ static void		fstr_maker(char *str, t_pf_list *base, size_t i, long double n)
 	long double	nb;
 
 	nb = 0.000001;
-	if (base->acc > 0)
+	if (base->acc > 0 || base->minus)
 	{
-		str[i++] = '.';
+		if (base->acc > 0)
+			str[i++] = '.';
 		while (base->acc > 0)
 		{
 			n *= 10;
-//			n = acnzero(n, base);
+			n = acnzero(n, base);
 			if ((int)(n + nb) != 10 && ((int)n != 10))
-				str[i++] = (int)(n + '0' + nb);
+				str[i++] = (int)((n + nb) + '0');
 			else
 				str[i++] = '0';
 			base->acc--;
 			n -= (int)n;
 		}
-		if (base->temp > 0 && base->minus)
+//		printf("\n t = %d\n", base->temp);
+		if (base->temp > 0)
 			while (base->temp--)
 				str[i++] = ' ';
 		while (base->acc-- > 0)
 			str[i++] = '0';
 	}
 	str[i] = '\0';
+//	printf("\n%Lf\n", n);
 	base->len_return += (ft_strlen(str));
 	ft_putstr(str);
 }
@@ -48,7 +51,10 @@ static int		prestr_maker(t_pf_list *base, char *str)
 
 	i = 0;
 	if ((base->plus || base->neg == 45) && base->nol)
+	{
 		str[i++] = base->neg;
+		base->temp--;
+	}
 	if (base->temp > 0 && !base->minus)
 	{
 		if (base->nol != 0)
@@ -69,14 +75,17 @@ static void		ft_convert_rest(char *str, long double n, t_pf_list *base, int dot)
 	i = prestr_maker(base, str);
 	if ((base->plus || base->neg == '-') && !base->nol)
 		str[i++] = base->neg;
-	n = acczero(n, base, dot);
 	while (dot--)
 	{
 		n *= 10;
 		str[i++] = (int)n + '0';
 		n -= (int)n;
+		if (base->acc == 0 && ((int)(n * 10) >= 5) && dot <= 0 
+						&& (acczero(str[i - 1]) != 0))
+			str[i - 1] += 1;
 	}
 	fstr_maker(str, base, i, n);
+	
 }
 
 static void		ft_convert(char *str, long double n, t_pf_list *base)
@@ -95,6 +104,8 @@ static void		ft_convert(char *str, long double n, t_pf_list *base)
 		dot++;
 		base->wid_bool++;
 	}
+	if (base->plus && base->acc == 0)
+		base->temp--;
 	ft_convert_rest(str, n, base, dot);
 }
 
@@ -117,6 +128,7 @@ void			pf_ftoa(long double n, t_pf_list *base)
 		sign = 1;
 	}
 	l = facc(t, base, sign);
+//	printf("\nl = %d\n", l);
 	str = (char *)malloc(sizeof(str) * (l + 1));
 	if (str)
 		ft_convert(str, n, base);

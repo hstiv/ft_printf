@@ -18,7 +18,7 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 
 	i = 0;
 	while (*format != 's' && *format != 'd' && *format != 'f' && *format != 'l'
-			&& *format != 'L' && *format != 'c')
+			&& *format != 'L' && *format != 'c' && *format != 'i')
 	{
 		if (ft_pars_flag(base, format))
 		{}
@@ -62,15 +62,17 @@ static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base)
 
 	i = ft_flag(base, format, ap);	
 	format += i;
-	if (ft_point_flags(format, ap, &i, base))
+	// printf("CHECK before i = %d\n", i); // PRINTF
+	if (ft_point_flags_f_d_i(format, ap, &i, base))
 	{}//i = ft_point_flags(format, ap, i, base);
 	else if (*format == 's' || *format == 'c' || *format == 'C')
 		i = ft_type_s(format, ap, i, base);
-	else if (*format == 'd' || *format == 'i')
-		i = ft_type_d(format, ap, i, base);
 	else
 		return (i);
-		//printf("CHECK! 7 \n"); // PRINTF
+	// else if (*format == 'd' || *format == 'i')
+	// 	i = ft_type_d(format, ap, base);
+	
+	// printf("CHECK after i = %d\n", i); // PRINTF
 		format++;
 	return (i);
 }

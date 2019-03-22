@@ -49,7 +49,7 @@ static void	ft_type_s_precision(t_pf_list *base)
 	}
 }
 
-static int	ft_type_bc(const char *fowrmat, va_list ap, int i, t_pf_list *base)
+static int	ft_type_bc(const char *format, va_list ap, int i, t_pf_list *base)
 {
 	double	l;
 
@@ -57,6 +57,7 @@ static int	ft_type_bc(const char *fowrmat, va_list ap, int i, t_pf_list *base)
 	ft_putchar(l);
 	base->len_return++;
 	i++;
+	format++;
 	return (i);
 }
 
