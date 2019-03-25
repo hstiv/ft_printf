@@ -10,9 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = ft_printf
+NAME = libftprintf.a
 
-SRC = src/ft_printf.c src/main.c src/ft_type_s.c src/ft_type_d.c \
+SRC = src/ft_printf.c src/ft_type_s.c src/ft_type_d.c \
 	  src/ft_prn_lst.c src/ft_pars_flag.c src/dtype_f/ft_type_f.c src/dtype_f/pf_ftoa.c \
 	  src/dtype_f/facc.c src/ft_point_flags_f_d_i.c src/ft_putnbr_prntf.c \
 	  src/dtype_f/rounding.c src/bonus/ft_type_b_e.c src/bonus/ft_type_g.c \
@@ -30,14 +30,13 @@ all: $(NAME)
 
 $(NAME):
 		@mkdir obj
-		@gcc $(WWW) \
-		-I $(HEAD) \
-		-c $(SRC)
+		@gcc $(WWW) -I $(HEAD) -c $(SRC)
 		@mv *.o obj/ 
 		@make -C $(LFT) re
-		@gcc -g \
-		$(OBG) $(LFT)/libft.a -o $(NAME)
-		@echo COMPILED!
+		@cp libft/libft.a ./$(NAME)
+		@ar rc -g $(NAME) $(OBG)
+		@renlib $(NAME)
+#		@echo COMPILED!
 
 clean:
 		@rm -rf $(OBJ)
