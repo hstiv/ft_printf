@@ -10,24 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "ft_printf.h"
 
-void	ft_putnbr_prntf(int n)
+void	ft_putnbr_prntf(unsigned long long int n)
 {
-	if (n < 0)
-	{
-		if (n == -2147483648)
-		{
-			ft_putnbr_prntf(214748364);
-			ft_putnbr_prntf(8);
-		}
-		else
-		{
-			n = n * -1;
-			ft_putnbr_prntf(n);
-		}
-	}
-	else if (n <= 9)
+	// if (n < 0)
+	// {
+	// 	if (n == -2147483648)
+	// 	{
+	// 		ft_putnbr_prntf(214748364);
+	// 		ft_putnbr_prntf(8);
+	// 	}
+	// 	else
+	// 	{
+	// 		n = n * -1;
+	// 		ft_putnbr_prntf(n);
+	// 	}
+	// }
+//	printf("\n%lld - putnbr\n", n);
+	if (n <= 9)
 	{
 		n = n + '0';
 		write(1, &n, 1);

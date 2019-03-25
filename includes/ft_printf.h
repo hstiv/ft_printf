@@ -39,12 +39,17 @@ typedef struct				s_pf_list
 	int						ld;
 	long int				num_l;
 	long long int			num_ll;
-	int				num_h;
+	int						num_h;
+	int						g_e;
 	char					num_hh;
 }							t_pf_list;
 
+void			ft_type_e(long double nb, t_pf_list *base);
+int				ft_type_b_e(const char *format, va_list ap, int i, t_pf_list *base);
+int				ft_type_g(const char *format, va_list ap, int i, t_pf_list *base);
 long double		acnzero(long double n, t_pf_list *base);
 int				acczero(char c);
+int				ft_puter(char *s, t_pf_list *base, int l);
 size_t			facc(long double n, t_pf_list *base, int sign);
 int				ft_point_flags_f_d_i(const char *format, va_list ap,int *i,
 														t_pf_list *base);
@@ -57,8 +62,9 @@ int				ft_pars_flag(t_pf_list *base, const char *format);
 int				ft_type_f(const char *format, va_list ap, t_pf_list *base);
 int				ft_type_s(const char *format, va_list ap, int i,
 														t_pf_list *base);
+void			ft_type_p(va_list ap, t_pf_list *base);														
 int				ft_type_d(va_list ap, t_pf_list *base);
-void			ft_putnbr_prntf(int n);
+void			ft_putnbr_prntf(unsigned long long int n);
 int				ft_numlen_for_prf(long long int nb);
 t_pf_list		*ft_create_pf_list();
 #endif

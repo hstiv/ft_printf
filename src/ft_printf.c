@@ -18,7 +18,9 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 
 	i = 0;
 	while (*format != 's' && *format != 'd' && *format != 'f' && *format != 'l'
-			&& *format != 'L' && *format != 'c' && *format != 'i')
+			&& *format != 'L' && *format != 'c' && *format != 'i' && *format != 'S'
+			&& *format != 'C' && *format != 'b' && *format != 'e' && *format != 'g'
+			&& *format != 'p' && *format != 'G' && *format != 'E')
 	{
 		if (ft_pars_flag(base, format))
 		{}
@@ -65,8 +67,14 @@ static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base)
 	// printf("CHECK before i = %d\n", i); // PRINTF
 	if (ft_point_flags_f_d_i(format, ap, &i, base))
 	{}//i = ft_point_flags(format, ap, i, base);
-	else if (*format == 's' || *format == 'c' || *format == 'C')
+	else if (*format == 's' || *format == 'c' || *format == 'C' || *format == 'S')
 		i = ft_type_s(format, ap, i, base);
+	else if (*format == 'b' || *format == 'e'
+		|| (*format == 'L' && (*(format + 1) == 'e')) || *format == 'E')
+		i = ft_type_b_e(format, ap, i, base);
+	else if ((*format == 'L' || *(format + 1) == 'g')
+		|| *format == 'p' || *format == 'g' || *format == 'G')
+		i = ft_type_g(format, ap, i, base);
 	else
 		return (i);
 	// else if (*format == 'd' || *format == 'i')

@@ -38,5 +38,6 @@ t_pf_list	*ft_create_pf_list()
 	base->num_ll = 0;
 	base->num_h = 0;
 	base->num_hh = 0;
+	base->g_e = 0;
 	return(base);
 }

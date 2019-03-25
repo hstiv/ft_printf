@@ -16,6 +16,7 @@ int		ft_numlen_for_prf(long long int nb)
 	long long unsigned int	num;
 	int						len;
 
+	del = 10;
 	if (nb < 0)
 		num = nb * -1;
 	else
@@ -24,7 +25,7 @@ int		ft_numlen_for_prf(long long int nb)
 	while (num / del != 0)
 	{
 		len++;
-		num = num \ del;
+		num = num / del;
 	}
 	return (len);
 }

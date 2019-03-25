@@ -6,7 +6,7 @@
 #    By: hharrold <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/21 16:38:05 by hharrold          #+#    #+#              #
-#    Updated: 2019/03/19 19:21:33 by hstiv            ###   ########.fr        #
+#    Updated: 2019/03/24 01:18:38 by hstiv            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,13 @@ NAME = ft_printf
 
 SRC = src/ft_printf.c src/main.c src/ft_type_s.c src/ft_type_d.c \
 	  src/ft_prn_lst.c src/ft_pars_flag.c src/dtype_f/ft_type_f.c src/dtype_f/pf_ftoa.c \
-	  src/dtype_f/facc.c src/ft_point_flags.c src/ft_putnbr_prntf.c \
-	  src/dtype_f/rounding.c
+	  src/dtype_f/facc.c src/ft_point_flags_f_d_i.c src/ft_putnbr_prntf.c \
+	  src/dtype_f/rounding.c src/bonus/ft_type_b_e.c src/bonus/ft_type_g.c \
+	  src/ft_numlen_for_prf.c
 
 HEAD = ./includes/
+
+WWW = -Wall -Wextra -Werror
 
 OBG = ./obj/*.o
 
@@ -27,12 +30,11 @@ all: $(NAME)
 
 $(NAME):
 		@mkdir obj
-		@gcc \
-		-Wall -Wextra -Werror \
+		@gcc $(WWW) \
 		-I $(HEAD) \
 		-c $(SRC)
 		@mv *.o obj/ 
-		@cd $(LFT) && make && cd -
+		@make -C $(LFT) re
 		@gcc -g \
 		$(OBG) $(LFT)/libft.a -o $(NAME)
 		@echo COMPILED!

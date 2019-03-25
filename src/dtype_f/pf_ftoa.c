@@ -12,36 +12,34 @@
 
 #include "ft_printf.h"
 
-static void		fstr_maker(char *str, t_pf_list *base, size_t i, long double n)
+static void		afterstr_maker(char *str, t_pf_list *b, size_t i, long double n)
 {
-	long double	nb;
-
-	nb = 0.000001;
-	if (base->acc > 0 || base->minus)
+	if (b->acc > 0 || b->minus)
 	{
-		if (base->acc > 0)
+		if (b->acc > 0)
 			str[i++] = '.';
-		while (base->acc > 0)
+		if (b->minus && !b->nol && !b->space)
+			b->temp++;
+		while (b->acc > 0)
 		{
 			n *= 10;
-			n = acnzero(n, base);
-			if ((int)(n + nb) != 10 && ((int)n != 10))
-				str[i++] = (int)((n + nb) + '0');
+			n = acnzero(n, b);
+			if ((int)(n + 0.000001) != 10 && ((int)n != 10))
+				str[i++] = (int)((n + 0.000001) + '0');
 			else
 				str[i++] = '0';
-			base->acc--;
+			b->acc--;
 			n -= (int)n;
 		}
-//		printf("\n t = %d\n", base->temp);
-		if (base->temp > 0)
-			while (base->temp--)
-				str[i++] = ' ';
-		while (base->acc-- > 0)
+		if (b->num_h && !b->d && !b->ld && !b->f && b->minus)
+			i += ft_puter(str, b, i);
+		while (b->temp-- > 1 && b->minus)
+			str[i++] = ' ';
+		while (b->acc-- > 0 && !b->minus)
 			str[i++] = '0';
 	}
 	str[i] = '\0';
-//	printf("\n%Lf\n", n);
-	base->len_return += (ft_strlen(str));
+	b->len_return += (ft_strlen(str));
 	ft_putstr(str);
 }
 
@@ -50,14 +48,18 @@ static int		prestr_maker(t_pf_list *base, char *str)
 	int			i;
 
 	i = 0;
-	if ((base->plus || base->neg == 45) && base->nol)
-	{
-		str[i++] = base->neg;
+	if (base->neg == '-' || base->plus)
 		base->temp--;
-	}
+	if ((base->plus || base->neg == 45) && base->nol)
+		str[i++] = base->neg;
+	if (base->space && !base->nol && !base->plus && base->neg == '+')
+		str[i++] = ' ';
 	if (base->temp > 0 && !base->minus)
 	{
-		if (base->nol != 0)
+		if (base->neg == '-' && base->nol && !base->plus
+					&& !base->minus && !base->space)
+			base->temp++;
+		if (base->nol)
 			while (base->temp > i)
 				str[i++] = '0';
 		if (base->temp > i)
@@ -68,24 +70,23 @@ static int		prestr_maker(t_pf_list *base, char *str)
 	return (i);
 }
 
-static void		ft_convert_rest(char *str, long double n, t_pf_list *base, int dot)
+static void		ft_convert_rest(char *s, long double n, t_pf_list *b, int dot)
 {
 	size_t		i;
 
-	i = prestr_maker(base, str);
-	if ((base->plus || base->neg == '-') && !base->nol)
-		str[i++] = base->neg;
+	i = prestr_maker(b, s);
+	if ((b->plus || b->neg == '-') && !b->nol)
+		s[i++] = b->neg;
 	while (dot--)
 	{
 		n *= 10;
-		str[i++] = (int)n + '0';
+		s[i++] = (int)n + '0';
 		n -= (int)n;
-		if (base->acc == 0 && ((int)(n * 10) >= 5) && dot <= 0 
-						&& (acczero(str[i - 1]) != 0))
-			str[i - 1] += 1;
+		if (b->acc == 0 && ((int)(n * 10) >= 5) && dot <= 0
+						&& (acczero(s[i - 1]) != 0))
+			s[i - 1] += 1;
 	}
-	fstr_maker(str, base, i, n);
-	
+	afterstr_maker(s, b, i, n);
 }
 
 static void		ft_convert(char *str, long double n, t_pf_list *base)
@@ -104,7 +105,7 @@ static void		ft_convert(char *str, long double n, t_pf_list *base)
 		dot++;
 		base->wid_bool++;
 	}
-	if (base->plus && base->acc == 0)
+	if (base->plus && base->acc == 0 && base->nol != 0)
 		base->temp--;
 	ft_convert_rest(str, n, base, dot);
 }
@@ -128,7 +129,6 @@ void			pf_ftoa(long double n, t_pf_list *base)
 		sign = 1;
 	}
 	l = facc(t, base, sign);
-//	printf("\nl = %d\n", l);
 	str = (char *)malloc(sizeof(str) * (l + 1));
 	if (str)
 		ft_convert(str, n, base);
