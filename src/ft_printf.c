@@ -20,7 +20,8 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 	while (*format != 's' && *format != 'd' && *format != 'f' && *format != 'l'
 			&& *format != 'L' && *format != 'c' && *format != 'i' && *format != 'S'
 			&& *format != 'C' && *format != 'b' && *format != 'e' && *format != 'g'
-			&& *format != 'p' && *format != 'G' && *format != 'E')
+			&& *format != 'p' && *format != 'G' && *format != 'E' && *format != 'h'
+			&& *format != 'x' && *format != 'X')
 	{
 		if (ft_pars_flag(base, format))
 		{}
@@ -51,7 +52,10 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 			i += ft_numlen(base->acc) - 1;
 		}
 		else
+			{
+			printf("\n%s\n", "bleat'");
 			return (-1); // hz
+			}
 		i++;
 		format++;
 	}
@@ -64,9 +68,8 @@ static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base)
 
 	i = ft_flag(base, format, ap);	
 	format += i;
-	// printf("CHECK before i = %d\n", i); // PRINTF
 	if (ft_point_flags_f_d_i(format, ap, &i, base))
-	{}//i = ft_point_flags(format, ap, i, base);
+	{}
 	else if (*format == 's' || *format == 'c' || *format == 'C' || *format == 'S')
 		i = ft_type_s(format, ap, i, base);
 	else if (*format == 'b' || *format == 'e'
@@ -77,11 +80,8 @@ static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base)
 		i = ft_type_g(format, ap, i, base);
 	else
 		return (i);
-	// else if (*format == 'd' || *format == 'i')
-	// 	i = ft_type_d(format, ap, base);
-	
-	// printf("CHECK after i = %d\n", i); // PRINTF
-		format++;
+	// format += i;
+	//	format++;
 	return (i);
 }
 
@@ -106,8 +106,7 @@ int				ft_parsing_prnt(const char *format, va_list ap) //USED
 		{
 			format++;
 			len_format = ft_parse_flag(format, ap, base);
-		//	printf("\nlen_format - %d\n", len_format);
-			if (len_format == -1)
+		if (len_format == -1)
 				return(-1);
 			format += len_format;
 		}

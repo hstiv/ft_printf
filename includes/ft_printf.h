@@ -41,16 +41,17 @@ typedef struct				s_pf_list
 	long long int			num_ll;
 	int						num_h;
 	int						g_e;
-	char					num_hh;
+	char					*num_hh;
 }							t_pf_list;
 
+int				inffin(long double n, t_pf_list *base);
 void			ft_type_e(long double nb, t_pf_list *base);
 int				ft_type_b_e(const char *format, va_list ap, int i, t_pf_list *base);
 int				ft_type_g(const char *format, va_list ap, int i, t_pf_list *base);
 long double		acnzero(long double n, t_pf_list *base);
 int				acczero(char c);
 int				ft_puter(char *s, t_pf_list *base, int l);
-size_t			facc(long double n, t_pf_list *base, int sign);
+size_t			facc(long double n, t_pf_list *base);
 int				ft_point_flags_f_d_i(const char *format, va_list ap,int *i,
 														t_pf_list *base);
 int				ft_printf(const char *format, ...);
@@ -62,6 +63,9 @@ int				ft_pars_flag(t_pf_list *base, const char *format);
 int				ft_type_f(const char *format, va_list ap, t_pf_list *base);
 int				ft_type_s(const char *format, va_list ap, int i,
 														t_pf_list *base);
+long long int	ft_va_arg_for_d(va_list ap, t_pf_list *base);
+void			ft_magic_base(t_pf_list *base, int len_num, int diff);
+int				print_hex(long long int nb, t_pf_list *base);
 void			ft_type_p(va_list ap, t_pf_list *base);														
 int				ft_type_d(va_list ap, t_pf_list *base);
 void			ft_putnbr_prntf(unsigned long long int n);

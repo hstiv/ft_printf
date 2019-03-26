@@ -65,11 +65,10 @@ static size_t	len_zero(long double n, t_pf_list *base)
 	return (l);
 }
 
-size_t			facc(long double n, t_pf_list *base, int sign)
+size_t			facc(long double n, t_pf_list *base)
 {
 	size_t		l;
 
-	sign = 0;
 	neg_len(&l, &n, base);
 	if (base->acc_bool)
 	{

@@ -20,7 +20,7 @@ static void		afterstr_maker(char *str, t_pf_list *b, size_t i, long double n)
 			str[i++] = '.';
 		if (b->minus && !b->nol && !b->space)
 			b->temp++;
-		while (b->acc > 0)
+		while (b->acc > 0 && !b->num_ll)
 		{
 			n *= 10;
 			n = acnzero(n, b);
@@ -107,6 +107,8 @@ static void		ft_convert(char *str, long double n, t_pf_list *base)
 	}
 	if (base->plus && base->acc == 0 && base->nol != 0)
 		base->temp--;
+	if (dot > 15)
+		base->num_ll = 1;
 	ft_convert_rest(str, n, base, dot);
 }
 
@@ -114,23 +116,20 @@ void			pf_ftoa(long double n, t_pf_list *base)
 {
 	char		*str;
 	int			l;
-	int			sign;
 	long double	t;
 
 	t = n;
-	sign = 0;
 	if (base->space && base->plus)
 		base->space = 0;
 	if (base->nol && base->minus)
 		base->nol = 0;
 	if (t < 0)
-	{
 		t *= -1;
-		sign = 1;
-	}
-	l = facc(t, base, sign);
+	if ((inffin(n, base)))
+		return ;
+	l = facc(t, base);
 	str = (char *)malloc(sizeof(str) * (l + 1));
-	if (str)
+	if (str && t != 1)
 		ft_convert(str, n, base);
 	free(str);
 }

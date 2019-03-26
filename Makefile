@@ -10,13 +10,13 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libftprintf.a
+NAME = ft_printf
 
-SRC = src/ft_printf.c src/ft_type_s.c src/ft_type_d.c \
+SRC = src/ft_printf.c src/main.c src/ft_type_s.c src/ft_type_d.c src/dtype_f/inffin.c \
 	  src/ft_prn_lst.c src/ft_pars_flag.c src/dtype_f/ft_type_f.c src/dtype_f/pf_ftoa.c \
 	  src/dtype_f/facc.c src/ft_point_flags_f_d_i.c src/ft_putnbr_prntf.c \
 	  src/dtype_f/rounding.c src/bonus/ft_type_b_e.c src/bonus/ft_type_g.c \
-	  src/ft_numlen_for_prf.c
+	  src/ft_numlen_for_prf.c src/ft_va_arg_for_d.c src/ft_magic_base.c
 
 HEAD = ./includes/
 
@@ -30,13 +30,14 @@ all: $(NAME)
 
 $(NAME):
 		@mkdir obj
-		@gcc $(WWW) -I $(HEAD) -c $(SRC)
+		@gcc $(WWW) \
+		-I $(HEAD) \
+		-c $(SRC)
 		@mv *.o obj/ 
 		@make -C $(LFT) re
-		@cp libft/libft.a ./$(NAME)
-		@ar rc -g $(NAME) $(OBG)
-		@renlib $(NAME)
-#		@echo COMPILED!
+		@gcc -g \
+		$(OBG) $(LFT)/libft.a -o $(NAME)
+		@echo COMPILED!
 
 clean:
 		@rm -rf $(OBJ)

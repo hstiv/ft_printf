@@ -12,20 +12,27 @@
 
 #include "ft_printf.h"
 
-static void				print_hex(int nb, t_pf_list *base)
+int				print_hex(long long int nb, t_pf_list *base)
 {
+	int i;
+
+	i = 0;
+	//printf("\ng_e - %d\n", base->g_e);
 	if (nb >= 16)
 		print_hex(nb / 16, base);
 	if ((nb % 16) < 10)
 	{
-		ft_putchar((nb % 16) + 48);
+		ft_putchar((nb % 16) + '0');
 		base->len_return++;
+		i++;
 	}
 	else
 	{
-		ft_putchar((nb % 16) - 10 + 'a');
+		ft_putchar((nb % 16) - 10 + base->f);
 		base->len_return++;
+		i++;
 	}
+	return (i);
 }
 
 void					ft_type_p(va_list ap, t_pf_list *base)
@@ -35,7 +42,7 @@ void					ft_type_p(va_list ap, t_pf_list *base)
 	p = va_arg(ap, long unsigned int);
 	ft_putstr("0x10");
 	base->len_return += 4;
-	print_hex((int)p, base);
+	print_hex((long long int)p, base);
 }
 
 static void				type_g_maker(t_pf_list *b, long double nb, int i)

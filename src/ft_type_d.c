@@ -12,55 +12,20 @@
 
 #include "ft_printf.h"
 
-static void				ft_magic_base(t_pf_list *base, int len_num , int diff)
-{
-	//printf("\nacc - %d ... width - %d ... len_num - %d\n", base->acc,base->width, len_num);
-	if (base->width > base->acc && base->width > len_num)
-	{
-		if (base->width - 1 > base->acc && base->neg == 1)
-		{
-			base->len_return += base->width;
-			base->width -= len_num + 1;
-		}
-		else if (base->neg == 0 && base->space == 0 && base->plus == 1)
-		{
-			base->len_return += base->width + base->plus;
-			base->width -= base->acc + 1;
-		}
-		else
-		{
-			base->len_return += base->width;
-			base->width -= len_num;
-		}
-	}
-	else
-	{
-		base->width = 0;
-		if (base->neg == 1 && diff > 0)
-			base->len_return += len_num + diff + 1;
-		else if (base->neg == 0 && diff > 0)
-			base->len_return += len_num + diff;
-		else
-			base->len_return += (len_num + base->neg);
-		// else if (base->neg == 1 && diff < 0)
-		// 	base->len_return += len_num + base->neg;
-		
-	}
-}
-
 static void				ft_base_min(t_pf_list *base, int diff,
 					unsigned long long int num, int len_num)
 {
-	//printf("\n%lld\n", num);
 	ft_magic_base(base, len_num, diff);
-	if (base->neg == 1)
+	if (base->neg == 1 && !base->f)
 		ft_putchar('-');
-	if (base->neg == 0 && base->space == 0 && base->plus == 1)
+	if (base->neg == 0 && base->space == 0 && base->plus == 1 && !base->f)
 		ft_putchar('+');
 	while (diff-- > 0)
 		ft_putchar('0');
-	ft_putnbr_prntf(num);
-//	printf("\nacc - %d ... width - %d ... len_num - %d\n", base->acc,base->width, len_num);
+	if (base->f)
+		ft_putstr(base->num_hh);
+	else
+		ft_putnbr_prntf(num);
 	while (base->width-- > 0)
 		ft_putchar(' ');
 }
@@ -68,53 +33,68 @@ static void				ft_base_min(t_pf_list *base, int diff,
 static void				ft_base_non_min(t_pf_list *base, int diff,
 					unsigned long long int num, int len_num)
 {
-//	printf("\n%lld\n", num);
 	ft_magic_base(base, len_num, diff);
 	while (base->width-- > 0)
 		ft_putchar(' ');
-	if (base->neg == 1 && base->nol == 1)
+	if (base->neg == 1 && base->nol == 1 && !base->f)
 		ft_putchar('-');
-	if (base->neg == 0 && base->space == 0 && base->plus == 1)
+	if (base->neg == 0 && base->space == 0 && base->plus == 1 && !base->f)
 		ft_putchar('+');
-	if (base->neg == 1 && base->nol == 0)
+	if (base->neg == 1 && base->nol == 0 && !base->f)
 		ft_putchar('-');
 	while (diff-- > 0)
 		ft_putchar('0');
-	ft_putnbr_prntf(num);
-}
-static long long int	ft_l_ll_mod(va_list ap, t_pf_list *base)
-{
-	long long int		num;
-
-	if (base->ld == 1)
-		num = (long long int)va_arg(ap, long int);
+	if (base->f)
+		ft_putstr(base->num_hh);
 	else
-		num = va_arg(ap, long long int);
-	return (num);
+		ft_putnbr_prntf(num);
 }
 
-// static long long int	ft_h_hh_mod(va_list ap, t_pf_list *base)
-// {
-// 	long long int		num;
-
-// 	if (base->d == 1)
-// 		num = (long long int)va_arg(ap, char);
-// 	else
-// 		num = va_arg(ap, signed char);
-// 	return (num);
-// }
-static long long int	ft_va_arg(va_list ap, t_pf_list *base)
+static void				ft_next_step(t_pf_list *base, int diff,
+								long long int num, int len_num)
 {
-	long long int		num;
-
-	if(base->ld)
-	 	num = ft_l_ll_mod(ap, base);
+	if (base->minus)
+	{
+		if (base->neg)
+			ft_base_min(base, diff, (unsigned long long int)num * (-1),
+															len_num);
+		else
+			ft_base_min(base, diff, (unsigned long long int)num, len_num);
+	}
 	else
-		num = (long long int)va_arg(ap, int);
-	// else if (base->d)
-	// 	num = ft_h_hh_mod(ap, base);
+	{
+		if (base->neg)
+			ft_base_non_min(base, diff, (unsigned long long int)num * (-1),
+															len_num);
+		else
+			ft_base_non_min(base, diff, (unsigned long long int)num, len_num);
+	}
+}
 
-	return(num);
+static char    *ft_itoa_unsigned(uintmax_t num, int base, t_pf_list *b)
+{
+    uintmax_t    value;
+    long        i;
+    char        *s;
+
+    i = 0;
+    value = num;
+    while (value)
+    {
+        i++;
+        value /= base;
+    }
+    s = ft_strnew(i);
+    s[i] = 0;
+    while (num)
+    {
+		if (b->f == 'A')
+    		s[--i] = "0123456789ABCDEF"[num % base];
+		else
+			s[--i] = "0123456789abcdef"[num % base];
+        num /= base;
+    }
+    return (s);
 }
 
 int						ft_type_d(va_list ap, t_pf_list *base)
@@ -122,97 +102,22 @@ int						ft_type_d(va_list ap, t_pf_list *base)
 	long long int		num;
 	int					len_num;
 	int					diff;
-	
+
 	diff = 0;
-	num = ft_va_arg(ap, base);
-	//printf("\n%lld\n", num);
-	len_num = ft_numlen_for_prf(num);
-	if (num < 0)
+	num = ft_va_arg_for_d(ap, base);
+	if (base->f)
+	{
+		base->num_hh = ft_itoa_unsigned(num, 16, base);
+		len_num = ft_strlen(base->num_hh);
+	}
+	else
+		len_num = ft_numlen_for_prf(num);
+	if (num < 0 && !base->f)
 		base->neg = 1;
 	else
 		base->neg = 0;
 	if (base->acc > len_num)
 		diff = base->acc - len_num;
-	if (base->minus)
-		{
-		if (base->neg)
-			ft_base_min(base, diff, (unsigned long long int)num * (-1), len_num);
-		else
-			ft_base_min(base, diff, (unsigned long long int)num, len_num);
-		}
-	else
-		{
-		if (base->neg)
-			ft_base_non_min(base, diff, (unsigned long long int)num * (-1), len_num);
-		else
-			ft_base_non_min(base, diff, (unsigned long long int)num, len_num);
-		}
-	
-		
-	return (base->d + base->ld + 1); // 
+	ft_next_step(base, diff, num, len_num);
+	return (base->d + base->ld + 1);
 }
-
-// static char			*ft_itoa_d(t_pf_list *base, va_list ap)
-// {
-// 	char			*char_num;
-// 	int				num;
-
-// 	char_num = NULL;
-	// if(base->ld)
-	// {
-	// 	// if (base->ld == 1)
-	// 	// {
-	// 	// 	base->num_l = va_arg(ap,long int);
-	// 	// 	if (base->num_l < 0)
-	// 	// 		base->neg == 1;
-	// 	// 	ft_hiaiarka((long long int)base->num_l);
-	// 	// }
-	// 	// else
-	// 	// {
-	// 	// 	base->num_ll = va_arg(ap,long long int);
-	// 	// 	if (base->num_ll < 0)
-	// 	// 		base->neg == 1;
-	// 	// 	ft_hiaiarka((long long int)base->num_ll);
-	// 	// }
-	// }
-	// else if(base->d)
-	// {
-	// 	if (base->d == 1)
-	// 		base->num_h = va_arg(ap, short int);
-	// 	else
-	// 		base->num_hh = va_arg(ap, char);
-	// }
-	// else
-	// 	num = va_arg(ap, int);
-	//len_num = ft_numlen_for_prf(num);
-	//return(char_num);
-//}
-
-// #include <unistd.h>
-
-// void	ft_putnbr_prntf(int n)
-// {
-// 	if (n < 0)
-// 	{
-// 		if (n == -2147483648)
-// 		{
-// 			ft_putnbr_prntf(214748364);
-// 			ft_putnbr_prntf(8);
-// 		}
-// 		else
-// 		{
-// 			n = n * -1;
-// 			ft_putnbr_prntf(n);
-// 		}
-// 	}
-// 	else if (n <= 9)
-// 	{
-// 		n = n + '0';
-// 		write(1, &n, 1);
-// 	}
-// 	else
-// 	{
-// 		ft_putnbr_prntf(n / 10);
-// 		ft_putnbr_prntf(n % 10);
-// 	}
-// }

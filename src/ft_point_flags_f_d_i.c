@@ -30,7 +30,8 @@ static void		ft_for_type_d(const char *format, t_pf_list *base)
 			base->d = 1;
 	}
 	else
-		base->f = 0;
+	{}
+
 }
 
 int				ft_point_flags_f_d_i(const char *format, va_list ap, int *i,
@@ -54,6 +55,22 @@ int				ft_point_flags_f_d_i(const char *format, va_list ap, int *i,
 	|| (*(format + 2) == 'd') || ((*(format + 1) == 'i') ||
 	(*(format + 2) == 'i')))) || (*format == 'd' || *format == 'i')))
 	{
+		ft_for_type_d(format, base);
+		*i += ft_type_d(ap, base);
+		bol = 1;
+	}
+	else if ((((*format == 'l' || *format == 'h') && (((*(format + 1) == 'X')
+	|| (*(format + 2) == 'X')))) || (*format == 'X')))
+	{
+		base->f = 65;
+		ft_for_type_d(format, base);
+		*i += ft_type_d(ap, base);
+		bol = 1;
+	}
+	else if ((((*format == 'l' || *format == 'h') && ((*(format + 1) == 'x')
+	|| (*(format + 2) == 'x')))) || (*format == 'x'))
+	{
+		base->f = 97;
 		ft_for_type_d(format, base);
 		*i += ft_type_d(ap, base);
 		bol = 1;
