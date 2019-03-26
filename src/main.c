@@ -17,8 +17,8 @@ int		main()
 {
 //	char	str[10] = "12345";
 //	printf("%d\n", ft_printf("\n!!!!%*.*i!!!!\n", 8, 3, 12));
-	printf("our- %d\n", ft_printf("\n*%f*\n", 1.0 / 0.0));
-	printf("sys- %d\n", printf("\n*%f*\n", 1.0 / 0.0));
+	printf("our- %d\n", ft_printf("\n*%*.*g*\n", 10, 10, 123456789.123456789));
+	printf("sys- %d\n", printf("\n*%*.*g*\n", 10, 10, 123456789.123456789));
 //	printf("%d\n", printf("\n!!!!%f!!!!\n", 300.87));
 //	printf("%d\n", printf("\n!!!!%*.*lo!!!!\n", 8, 3, 3147483647));55
 //	printf("%d\n", ft_printf("\n*%bs*\n",2));

@@ -21,7 +21,7 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 			&& *format != 'L' && *format != 'c' && *format != 'i' && *format != 'S'
 			&& *format != 'C' && *format != 'b' && *format != 'e' && *format != 'g'
 			&& *format != 'p' && *format != 'G' && *format != 'E' && *format != 'h'
-			&& *format != 'x' && *format != 'X')
+			&& *format != 'x' && *format != 'X' && *format != 'r')
 	{
 		if (ft_pars_flag(base, format))
 		{}
@@ -76,7 +76,7 @@ static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base)
 		|| (*format == 'L' && (*(format + 1) == 'e')) || *format == 'E')
 		i = ft_type_b_e(format, ap, i, base);
 	else if ((*format == 'L' || *(format + 1) == 'g')
-		|| *format == 'p' || *format == 'g' || *format == 'G')
+		|| *format == 'r' || *format == 'g' || *format == 'G')
 		i = ft_type_g(format, ap, i, base);
 	else
 		return (i);

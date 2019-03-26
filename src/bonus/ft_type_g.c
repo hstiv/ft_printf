@@ -88,9 +88,9 @@ int						ft_type_g(const char *format, va_list ap, int i, t_pf_list *base)
 			ft_tttype_g(va_arg(ap, double), base);
 		}
 	}
-	else if (*format == 'p')
+	else if (*format == 'r')
 	{
-		ft_type_p(ap, base);
+		ft_type_r(ap, base);
 		i++;
 	}
     format++;

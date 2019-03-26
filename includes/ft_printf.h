@@ -44,6 +44,7 @@ typedef struct				s_pf_list
 	char					*num_hh;
 }							t_pf_list;
 
+
 int				inffin(long double n, t_pf_list *base);
 void			ft_type_e(long double nb, t_pf_list *base);
 int				ft_type_b_e(const char *format, va_list ap, int i, t_pf_list *base);
@@ -66,7 +67,7 @@ int				ft_type_s(const char *format, va_list ap, int i,
 long long int	ft_va_arg_for_d(va_list ap, t_pf_list *base);
 void			ft_magic_base(t_pf_list *base, int len_num, int diff);
 int				print_hex(long long int nb, t_pf_list *base);
-void			ft_type_p(va_list ap, t_pf_list *base);														
+void			ft_type_r(va_list ap, t_pf_list *base);														
 int				ft_type_d(va_list ap, t_pf_list *base);
 void			ft_putnbr_prntf(unsigned long long int n);
 int				ft_numlen_for_prf(long long int nb);
