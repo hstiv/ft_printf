@@ -84,9 +84,7 @@ static void				ft_next_step(t_pf_list *base, int diff,
 //     {
 //         i++;
 //         value /= base;
-// 		printf("\nvalue = %ld\n", i);
 //     }
-// 	printf("\ni = %ld\n", i);
 //     s = ft_strnew(i);
 //     s[i] = 0;
 //     while (num)
@@ -107,9 +105,7 @@ static char    *ft_itoa_unsigned(intmax_t num, int base)
     char        *s;
 
     i = 0;
-	printf("\nnum - %jd\n", num);
     value = (int)num;
-	printf("\nvalue - %d\n", value);
     while (value)
     {
         i++;
@@ -119,11 +115,9 @@ static char    *ft_itoa_unsigned(intmax_t num, int base)
     s[i] = 0;
     while (num)
     {
-		printf("\nostatok %d\n", (int)num % base);
         s[--i] = "0123456789abcdef"[(int)num % base];
         num /= base;
     }
-	printf("\nnase s- %s\n", s);
     return (s);
 }
 
@@ -137,12 +131,10 @@ int						ft_type_d(va_list ap, t_pf_list *base)
 	num = ft_va_arg_for_d(ap, base);
 	if (base->f)
 	{	
-		printf("\nnum - %jd\n", num);
 		if (base->f == 8)
 			base->num_hh = ft_itoa_unsigned(num, 8);
 		else
-			base->num_hh = ft_itoa_unsigned(num, 16);
-		printf("\nnase hh - %s\n", base->num_hh);	
+			base->num_hh = ft_itoa_unsigned(num, 16);	
 		len_num = ft_strlen(base->num_hh);
 	}
 	else

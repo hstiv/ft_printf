@@ -27,7 +27,6 @@ void	ft_putnbr_prntf(unsigned long long int n)
 	// 		ft_putnbr_prntf(n);
 	// 	}
 	// }
-//	printf("\n%lld - putnbr\n", n);
 	if (n <= 9)
 	{
 		n = n + '0';

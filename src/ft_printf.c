@@ -52,10 +52,7 @@ static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 			i += ft_numlen(base->acc) - 1;
 		}
 		else
-			{
-			printf("\n%s\n", "bleat'");
 			return (-1); // hz
-			}
 		i++;
 		format++;
 	}
