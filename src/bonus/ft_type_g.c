@@ -31,29 +31,6 @@ static void				type_g_maker(t_pf_list *b, long double nb, int i)
 	}
 }
 
-static void				tip_g_kostya(int i, t_pf_list *base, long double nb)
-{
-	if (base->width < base->acc)
-		{
-			base->acc = 9;
-			pf_ftoa(nb, base);
-			return ;
-		}
-	else if (base->width > base->acc)
-	{
-		base->acc = base->acc - i - 1;
-		pf_ftoa(nb, base);
-		return ;
-	}
-	else
-	{
-		base->width = 0;
-		base->acc = base->acc - i - 1;
-		pf_ftoa(nb, base);
-		return ;
-	}
-}
-
 static void				ft_tttype_g(long double nb, t_pf_list *base)
 {
 	long double			n;
@@ -65,10 +42,14 @@ static void				ft_tttype_g(long double nb, t_pf_list *base)
 		n *= -1;
 	while ((long long int)n > 9 && ++i)
 		n = n / 10;
-	if (base->wid_bool && base->acc_bool && i < base->acc)
+	if (base->wid_bool && base->acc_bool)
 	{
-		tip_g_kostya(i, base, nb);
-		return ;
+		if (base->width < base->acc)
+			{
+				base->acc = 9;
+				pf_ftoa(nb, base);
+				return ;
+			}
 	}
 	type_g_maker(base, nb, i);
 }

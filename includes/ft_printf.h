@@ -44,7 +44,6 @@ typedef struct				s_pf_list
 	char					*num_hh;
 }							t_pf_list;
 
-
 int				inffin(long double n, t_pf_list *base);
 void			ft_type_e(long double nb, t_pf_list *base);
 int				ft_type_b_e(const char *format, va_list ap, int i, t_pf_list *base);
@@ -54,6 +53,8 @@ int				acczero(char c);
 int				ft_puter(char *s, t_pf_list *base, int l);
 size_t			facc(long double n, t_pf_list *base);
 int				ft_point_flags_f_d_i(const char *format, va_list ap,int *i,
+														t_pf_list *base);
+int				ft_point_flags_x_X_o(const char *format, va_list ap, int *i,
 														t_pf_list *base);
 int				ft_printf(const char *format, ...);
 int				ft_parsing_prnt(const char *format, va_list ap);

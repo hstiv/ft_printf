@@ -36,13 +36,13 @@ static long long int	ft_h_hh_mod(va_list ap, t_pf_list *base)
 
 long long int			ft_va_arg_for_d(va_list ap, t_pf_list *base)
 {
-	long long int		num;
+	intmax_t		num;
 
 	if (base->ld)
 		num = ft_l_ll_mod(ap, base);
 	else if (base->d)
 		num = ft_h_hh_mod(ap, base);
 	else
-		num = (long long int)va_arg(ap, int);
+		num = (int)va_arg(ap, int);
 	return (num);
 }

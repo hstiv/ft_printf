@@ -13,7 +13,7 @@
 #include "ft_printf.h"
 #include "libft.h"
 
-static void		ft_for_type_d(const char *format, t_pf_list *base)
+static void		ft_for_type_mod(const char *format, t_pf_list *base)
 {
 	if (*format == 'l')
 	{
@@ -34,28 +34,32 @@ static void		ft_for_type_d(const char *format, t_pf_list *base)
 
 }
 
-int				ft_point_flags_f_d_i(const char *format, va_list ap, int *i,
+int				ft_point_flags_x_X_o(const char *format, va_list ap, int *i,
 														t_pf_list *base)
 {
 	int	bol;
 
-	if (((*format == 'l' || *format == 'L')
-				&& *(format + 1) == 'f') || *format == 'f')
+	if ((((*format == 'l' || *format == 'h') && (((*(format + 1) == 'X')
+	|| (*(format + 2) == 'X')))) || (*format == 'X')))
 	{
-		if (*format == 'l')
-			base->d = 1;
-		else if (*format == 'L')
-			base->ld = 1;
-		else
-			base->f = 1;
-		*i += ft_type_f(format, ap, base);
+		base->f = 65;
+		ft_for_type_mod(format, base);
+		*i += ft_type_d(ap, base);
 		bol = 1;
 	}
-	else if ((((*format == 'l' || *format == 'h') && ((*(format + 1) == 'd')
-	|| (*(format + 2) == 'd') || ((*(format + 1) == 'i') ||
-	(*(format + 2) == 'i')))) || (*format == 'd' || *format == 'i')))
+	else if ((((*format == 'l' || *format == 'h') && ((*(format + 1) == 'x')
+	|| (*(format + 2) == 'x')))) || (*format == 'x'))
 	{
-		ft_for_type_d(format, base);
+		base->f = 97;
+		ft_for_type_mod(format, base);
+		*i += ft_type_d(ap, base);
+		bol = 1;
+	}
+	else if ((((*format == 'l' || *format == 'h') && ((*(format + 1) == 'o')
+	|| (*(format + 2) == 'o')))) || (*format == 'o'))
+	{
+		base->f = 8;
+		ft_for_type_mod(format, base);
 		*i += ft_type_d(ap, base);
 		bol = 1;
 	}

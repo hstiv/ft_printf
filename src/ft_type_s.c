@@ -50,32 +50,11 @@ static void	ft_type_s_precision(t_pf_list *base)
 	}
 }
 
-/*static int	ft_type_bigc(const char *format, va_list ap, int i, t_pf_list *base)
-{
-	char	l[10];
-
-	*l = va_arg(ap, char);
-	if (base->width || base->minus != 0 || !base->acc)
-	{
-		base->acc = 0;
-		base->width -= 1;
-	}
-	if (base->width > 0 && !base->minus)
-		ft_type_s_precision(base);
-	write(1, l, ft_strlen(l));
-	if (base->acc > 0)
-		base->acc = 0;
-	ft_type_s_accuracy(base);
-	base->len_return++;
-	format++;
-	return (++i);
-}
-
 static int	ft_type_c(const char *format, va_list ap, int i, t_pf_list *base)
 {
-	char	d[10];
+	char	d;
 
-	*d = va_arg(ap, char);
+	d = va_arg(ap, int);
 	if (base->width || base->minus != 0 || !base->acc)
 	{
 		base->acc = 0;
@@ -83,7 +62,7 @@ static int	ft_type_c(const char *format, va_list ap, int i, t_pf_list *base)
 	}
 	if (base->width > 0 && !base->minus)
 		ft_type_s_precision(base);
-	write(1, d, ft_strlen(d));
+	write(1, &d, 1);
 	if (base->acc > 0)
 		base->acc = 0;
 	ft_type_s_accuracy(base);
@@ -91,15 +70,13 @@ static int	ft_type_c(const char *format, va_list ap, int i, t_pf_list *base)
 	format++;
 	return (++i);
 }
-*/
+
 int			ft_type_s(const char *format, va_list ap, int i, t_pf_list *base)
 {
 	char	*str;
 
-//	if (*format == 'c')
-//		return (ft_type_c(format, ap, i, base));
-//	if (*format == 'C')
-//		return (ft_type_bigc(format, ap, i, base));
+	 if (*format == 'c' || *format == 'C')
+	 	return (ft_type_c(format, ap, i, base));
 	str = va_arg(ap, char *);
 	if (base->acc_bool == 0)
 	{

@@ -71,14 +71,45 @@ static void				ft_next_step(t_pf_list *base, int diff,
 	}
 }
 
-static char    *ft_itoa_unsigned(uintmax_t num, int base, t_pf_list *b)
+// static char    *ft_itoa_unsigned(uintmax_t num, int base)
+// {
+//     uintmax_t    value;
+//   // int			value;
+//     long        i;
+//     char        *s;
+
+//     i = 0;
+//     value = num;
+//     while (value)
+//     {
+//         i++;
+//         value /= base;
+// 		printf("\nvalue = %ld\n", i);
+//     }
+// 	printf("\ni = %ld\n", i);
+//     s = ft_strnew(i);
+//     s[i] = 0;
+//     while (num)
+//     {
+// 		// if (b->f == 'A')
+//     	// 	s[--i] = "0123456789ABCDEF"[num % base];
+// 		// else
+// 			s[--i] = "0123456789abcdef"[num % base];
+//         num /= base;
+//     }
+//     return (s);
+// }
+
+static char    *ft_itoa_unsigned(intmax_t num, int base)
 {
-    uintmax_t    value;
+    int    value;
     long        i;
     char        *s;
 
     i = 0;
-    value = num;
+	printf("\nnum - %jd\n", num);
+    value = (int)num;
+	printf("\nvalue - %d\n", value);
     while (value)
     {
         i++;
@@ -88,26 +119,30 @@ static char    *ft_itoa_unsigned(uintmax_t num, int base, t_pf_list *b)
     s[i] = 0;
     while (num)
     {
-		if (b->f == 'A')
-    		s[--i] = "0123456789ABCDEF"[num % base];
-		else
-			s[--i] = "0123456789abcdef"[num % base];
+		printf("\nostatok %d\n", (int)num % base);
+        s[--i] = "0123456789abcdef"[(int)num % base];
         num /= base;
     }
+	printf("\nnase s- %s\n", s);
     return (s);
 }
 
 int						ft_type_d(va_list ap, t_pf_list *base)
 {
-	long long int		num;
+	intmax_t		num;
 	int					len_num;
 	int					diff;
 
 	diff = 0;
 	num = ft_va_arg_for_d(ap, base);
 	if (base->f)
-	{
-		base->num_hh = ft_itoa_unsigned(num, 16, base);
+	{	
+		printf("\nnum - %jd\n", num);
+		if (base->f == 8)
+			base->num_hh = ft_itoa_unsigned(num, 8);
+		else
+			base->num_hh = ft_itoa_unsigned(num, 16);
+		printf("\nnase hh - %s\n", base->num_hh);	
 		len_num = ft_strlen(base->num_hh);
 	}
 	else
