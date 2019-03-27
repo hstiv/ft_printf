@@ -6,70 +6,96 @@
 /*   By: hharrold <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/01 14:34:43 by hharrold          #+#    #+#             */
-/*   Updated: 2019/03/19 16:23:27 by hstiv            ###   ########.fr       */
+/*   Updated: 2019/03/27 21:20:48 by hstiv            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+static void		ft_num_for_width(t_pf_list *base, va_list ap, int n,
+													const char *format)
+{
+	if (n == 1)
+	{
+		base->width = va_arg(ap, int);
+		base->wid_bool = 1;
+	}
+	else
+	{
+		base->width = ft_atoi(format);
+		base->wid_bool = 1;
+	}
+}
+
+static int		ft_fill_flag(t_pf_list *base, const char *format, va_list ap)
+{
+	int	i;
+	
+	i = 0;
+	if (ft_pars_flag(base, format))
+	{}
+	else if (*format == '.')
+	{
+		format++;
+		if (*format == '*')
+			base->acc = va_arg(ap, int);
+		else
+		{
+			base->acc = ft_atoi(format);
+			format += ft_numlen(base->acc) - 1;
+			i += ft_numlen(base->acc) - 1;
+		}
+		base->acc_bool = 1;
+		i++;
+	}
+	else if (*format == '*')
+		ft_num_for_width(base, ap, 1, format);
+	else if (*format >= '0' && *format <= '9')
+	{
+		ft_num_for_width(base, ap, 0, format);
+		format += ft_numlen(base->width) - 1;
+		i += ft_numlen(base->acc) - 1;
+	}
+	else
+		return (-1);
+	i++;
+	return (i);
+}
 
 static int		ft_flag(t_pf_list *base, const char *format, va_list ap)
 {
 	int		i;
+	int		j;
 
-	i = 0;
+	j = 0;
 	while (*format != 's' && *format != 'd' && *format != 'f' && *format != 'l'
 			&& *format != 'L' && *format != 'c' && *format != 'i' && *format != 'S'
 			&& *format != 'C' && *format != 'b' && *format != 'e' && *format != 'g'
 			&& *format != 'r' && *format != 'G' && *format != 'E' && *format != 'h'
-			&& *format != 'x' && *format != 'X' && *format != 'o')
+			&& *format != 'x' && *format != 'X' && *format != 'o' && *format != 'u'
+			&& *format != '\0' && *format != '%')
 	{
-		if (ft_pars_flag(base, format))
-		{}
-		else if (*format == '.')
-		{
-			format++;
-			if (*format == '*')
-				base->acc = va_arg(ap, int);
-			else
-			{
-				base->acc = ft_atoi(format);
-				format += ft_numlen(base->acc) - 1;
-				i += ft_numlen(base->acc) - 1;
-			}
-			base->acc_bool = 1;
-			i++;
-		}
-		else if (*format == '*')
-		{
-			base->width = va_arg(ap, int);
-			base->wid_bool = 1;
-		}
-		else if (*format >= '0' && *format <= '9')
-		{
-			base->width = ft_atoi(format);
-			base->wid_bool = 1;
-			format += ft_numlen(base->width) - 1;
-			i += ft_numlen(base->acc) - 1;
-		}
-		else
-			return (-1); // hz
-		i++;
-		format++;
+		i = ft_fill_flag(base, format, ap);
+		j += i;
+		format += i;
 	}
-	return (i);
+	return (j);
 }
 
 static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base)
 {
 	int			i;
 
-	i = ft_flag(base, format, ap);	
+	i = ft_flag(base, format, ap);
+	if (i == -1)
+		return (-1);
 	format += i;
 	if (ft_point_flags_f_d_i(format, ap, &i, base))
 	{}
-	if (ft_point_flags_x_X_o(format, ap, &i, base))
+	else if (ft_point_flags_x_X_o(format, ap, &i, base))
 	{}
-	else if (*format == 's' || *format == 'c' || *format == 'C' || *format == 'S')
+	else if (ft_point_flags_u(format, ap, &i, base))
+	{}
+	else if (*format == 's' || *format == 'c' || *format == 'C' || *format == 'S' || *format == '%') // добавить печать %
 		i = ft_type_s(format, ap, i, base);
 	else if (*format == 'b' || *format == 'e'
 		|| (*format == 'L' && (*(format + 1) == 'e')) || *format == 'E')
@@ -78,13 +104,19 @@ static int		ft_parse_flag(const char *format, va_list ap, t_pf_list *base)
 		|| *format == 'r' || *format == 'g' || *format == 'G')
 		i = ft_type_g(format, ap, i, base);
 	else
-		return (i);
-	// format += i;
-	//	format++;
+		return (-1);
+	format++; //deleted?!
 	return (i);
 }
 
-int				ft_parsing_prnt(const char *format, va_list ap) //USED
+static int		ft_print(const char *format, t_pf_list *base)
+{
+	ft_putchar(*format);
+	base->len_return++;
+	return (1);
+}
+
+int				ft_parsing_prnt(const char *format, va_list ap)
 {
 	int			len_format;
 	t_pf_list	*base;
@@ -96,16 +128,12 @@ int				ft_parsing_prnt(const char *format, va_list ap) //USED
 		if (!(base = ft_create_pf_list()))
 			return (-1);
 		while(*format != '%' && *format != '\0')
-		{
-			ft_putchar(*format);
-			format++;
-			base->len_return++;
-		}
+			format += ft_print(format, base);
 		if (*format == '%')
 		{
 			format++;
 			len_format = ft_parse_flag(format, ap, base);
-		if (len_format == -1)
+			if (len_format == -1)
 				return(-1);
 			format += len_format;
 		}
@@ -115,7 +143,7 @@ int				ft_parsing_prnt(const char *format, va_list ap) //USED
 	return(return_len);
 }
 
-int				ft_printf(const char *format, ...) // USED
+int				ft_printf(const char *format, ...)
 {
 	int			result;
 	va_list		ap;

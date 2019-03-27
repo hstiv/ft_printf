@@ -26,7 +26,7 @@ static void			ft_help_base(t_pf_list *base, int len_num, int diff)
 	// 	base->len_return += base->width + diff;
 }
 
-void				ft_magic_base(t_pf_list *base, int len_num, int diff)
+static void				ft_next_step(t_pf_list *base, int len_num, int diff)
 {
 	if (base->width > base->acc && base->width > len_num)
 	{
@@ -51,5 +51,64 @@ void				ft_magic_base(t_pf_list *base, int len_num, int diff)
 	else
 	{
 		ft_help_base(base, len_num, diff);
+	}
+}
+
+static void				ft_base_min(t_pf_list *base, int diff,
+					unsigned long long int num, int len_num)
+{
+	ft_next_step(base, len_num, diff);
+	if (base->neg == 1 && !base->f)
+		ft_putchar('-');
+	if (base->neg == 0 && base->space == 0 && base->plus == 1 && !base->f)
+		ft_putchar('+');
+	while (diff-- > 0)
+		ft_putchar('0');
+	if (base->f)
+		ft_putstr(base->num_hh);
+	else
+		ft_putnbr_prntf(num);
+	while (base->width-- > 0)
+		ft_putchar(' ');
+}
+
+static void				ft_base_non_min(t_pf_list *base, int diff,
+					unsigned long long int num, int len_num)
+{
+	ft_next_step(base, len_num, diff);
+	while (base->width-- > 0)
+		ft_putchar(' ');
+	if (base->neg == 1 && base->nol == 1 && !base->f)
+		ft_putchar('-');
+	if (base->neg == 0 && base->space == 0 && base->plus == 1 && !base->f)
+		ft_putchar('+');
+	if (base->neg == 1 && base->nol == 0 && !base->f)
+		ft_putchar('-');
+	while (diff-- > 0)
+		ft_putchar('0');
+	if (base->f)
+		ft_putstr(base->num_hh);
+	else
+		ft_putnbr_prntf(num);
+}
+
+void				ft_magic_base(t_pf_list *base, int diff,
+								long long int num, int len_num)
+{
+	if (base->minus)
+	{
+		if (base->neg)
+			ft_base_min(base, diff, (unsigned long long int)num * (-1),
+															len_num);
+		else
+			ft_base_min(base, diff, (unsigned long long int)num, len_num);
+	}
+	else
+	{
+		if (base->neg)
+			ft_base_non_min(base, diff, (unsigned long long int)num * (-1),
+															len_num);
+		else
+			ft_base_non_min(base, diff, (unsigned long long int)num, len_num);
 	}
 }

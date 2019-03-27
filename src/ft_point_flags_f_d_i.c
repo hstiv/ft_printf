@@ -17,14 +17,16 @@ static void		ft_for_type_d(const char *format, t_pf_list *base)
 {
 	if (*format == 'l')
 	{
-		if ((*format + 1) == 'l')
+		format++;
+		if ((*format) == 'l')
 			base->ld = 2;
 		else
 			base->ld = 1;
 	}
 	else if (*format == 'h')
 	{
-		if ((*format + 1) == 'h')
+		format++;
+		if ((*format) == 'h')
 			base->d = 2;
 		else
 			base->d = 1;

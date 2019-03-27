@@ -12,113 +12,65 @@
 
 #include "ft_printf.h"
 
-static void				ft_base_min(t_pf_list *base, int diff,
-					unsigned long long int num, int len_num)
+static int		ft_numlen_base( uintmax_t value, int base)
 {
-	ft_magic_base(base, len_num, diff);
-	if (base->neg == 1 && !base->f)
-		ft_putchar('-');
-	if (base->neg == 0 && base->space == 0 && base->plus == 1 && !base->f)
-		ft_putchar('+');
-	while (diff-- > 0)
-		ft_putchar('0');
-	if (base->f)
-		ft_putstr(base->num_hh);
-	else
-		ft_putnbr_prntf(num);
-	while (base->width-- > 0)
-		ft_putchar(' ');
-}
+	long		i;
 
-static void				ft_base_non_min(t_pf_list *base, int diff,
-					unsigned long long int num, int len_num)
-{
-	ft_magic_base(base, len_num, diff);
-	while (base->width-- > 0)
-		ft_putchar(' ');
-	if (base->neg == 1 && base->nol == 1 && !base->f)
-		ft_putchar('-');
-	if (base->neg == 0 && base->space == 0 && base->plus == 1 && !base->f)
-		ft_putchar('+');
-	if (base->neg == 1 && base->nol == 0 && !base->f)
-		ft_putchar('-');
-	while (diff-- > 0)
-		ft_putchar('0');
-	if (base->f)
-		ft_putstr(base->num_hh);
-	else
-		ft_putnbr_prntf(num);
-}
-
-static void				ft_next_step(t_pf_list *base, int diff,
-								long long int num, int len_num)
-{
-	if (base->minus)
-	{
-		if (base->neg)
-			ft_base_min(base, diff, (unsigned long long int)num * (-1),
-															len_num);
-		else
-			ft_base_min(base, diff, (unsigned long long int)num, len_num);
-	}
-	else
-	{
-		if (base->neg)
-			ft_base_non_min(base, diff, (unsigned long long int)num * (-1),
-															len_num);
-		else
-			ft_base_non_min(base, diff, (unsigned long long int)num, len_num);
-	}
-}
-
-// static char    *ft_itoa_unsigned(uintmax_t num, int base)
-// {
-//     uintmax_t    value;
-//   // int			value;
-//     long        i;
-//     char        *s;
-
-//     i = 0;
-//     value = num;
-//     while (value)
-//     {
-//         i++;
-//         value /= base;
-//     }
-//     s = ft_strnew(i);
-//     s[i] = 0;
-//     while (num)
-//     {
-// 		// if (b->f == 'A')
-//     	// 	s[--i] = "0123456789ABCDEF"[num % base];
-// 		// else
-// 			s[--i] = "0123456789abcdef"[num % base];
-//         num /= base;
-//     }
-//     return (s);
-// }
-
-static char    *ft_itoa_unsigned(intmax_t num, int base)
-{
-    int    value;
-    long        i;
-    char        *s;
-
-    i = 0;
-    value = (int)num;
-    while (value)
+	i = 0;
+	while (value)
     {
         i++;
         value /= base;
     }
-    s = ft_strnew(i);
-    s[i] = 0;
-    while (num)
-    {
-        s[--i] = "0123456789abcdef"[(int)num % base];
-        num /= base;
-    }
+	return (i);
+}
+static char		*ft_str_for_null()
+{
+	char *s;
+
+	s = ft_strnew(1);
+	s[0] = '0';
+	s[1] = 0;
+	return (s);
+}
+
+static char		*ft_itoa_unsigned(uintmax_t num, int base, t_pf_list *b)
+{
+    uintmax_t    value;
+    long        i;
+    char        *s;
+
+    i = 0;
+    if(!b->ld && !b->d)
+		value = (unsigned int)num;
+	else
+		value = num;
+	i = ft_numlen_base(value, base);
+	if (num == 0)
+		s = ft_str_for_null();
+    else
+	{
+		s = ft_strnew(i);
+    	s[i] = 0;
+		while (value)
+		{
+			s[--i] = "0123456789abcdef"[value % base];
+			value /= base;
+		}
+	}
     return (s);
+}
+
+static void				ft_for_base_num(uintmax_t num, t_pf_list *base)
+{
+	if (base->f == 8)
+		base->num_hh = ft_itoa_unsigned(num, 8, base);
+	else if (base->f == 10)
+		base->num_hh = ft_itoa_unsigned(num, 10, base);
+	else
+		base->num_hh = ft_itoa_unsigned(num, 16, base);
+	if (base->f == 65)
+		ft_strupper(base->num_hh);
 }
 
 int						ft_type_d(va_list ap, t_pf_list *base)
@@ -130,11 +82,8 @@ int						ft_type_d(va_list ap, t_pf_list *base)
 	diff = 0;
 	num = ft_va_arg_for_d(ap, base);
 	if (base->f)
-	{	
-		if (base->f == 8)
-			base->num_hh = ft_itoa_unsigned(num, 8);
-		else
-			base->num_hh = ft_itoa_unsigned(num, 16);	
+	{
+		ft_for_base_num(num, base);
 		len_num = ft_strlen(base->num_hh);
 	}
 	else
@@ -145,6 +94,6 @@ int						ft_type_d(va_list ap, t_pf_list *base)
 		base->neg = 0;
 	if (base->acc > len_num)
 		diff = base->acc - len_num;
-	ft_next_step(base, diff, num, len_num);
+	ft_magic_base(base, diff, num, len_num);
 	return (base->d + base->ld + 1);
 }

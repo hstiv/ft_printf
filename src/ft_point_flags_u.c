@@ -36,31 +36,15 @@ static void		ft_for_type_mod(const char *format, t_pf_list *base)
 
 }
 
-int				ft_point_flags_x_X_o(const char *format, va_list ap, int *i,
+int				ft_point_flags_u(const char *format, va_list ap, int *i,
 														t_pf_list *base)
 {
 	int	bol;
 
-	if ((((*format == 'l' || *format == 'h') && (((*(format + 1) == 'X')
-	|| (*(format + 2) == 'X')))) || (*format == 'X')))
+	if ((((*format == 'l' || *format == 'h') && (((*(format + 1) == 'u')
+	|| (*(format + 2) == 'u')))) || (*format == 'u')))
 	{
-		base->f = 65;
-		ft_for_type_mod(format, base);
-		*i += ft_type_d(ap, base);
-		bol = 1;
-	}
-	else if ((((*format == 'l' || *format == 'h') && ((*(format + 1) == 'x')
-	|| (*(format + 2) == 'x')))) || (*format == 'x'))
-	{
-		base->f = 97;
-		ft_for_type_mod(format, base);
-		*i += ft_type_d(ap, base);
-		bol = 1;
-	}
-	else if ((((*format == 'l' || *format == 'h') && ((*(format + 1) == 'o')
-	|| (*(format + 2) == 'o')))) || (*format == 'o'))
-	{
-		base->f = 8;
+		base->f = 10;
 		ft_for_type_mod(format, base);
 		*i += ft_type_d(ap, base);
 		bol = 1;

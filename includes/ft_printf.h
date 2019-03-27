@@ -21,27 +21,27 @@
 
 typedef struct				s_pf_list
 {
-	int						hew;
-	int						space;
-	int						plus;
-	int						minus;
-	int						nol;
-	int						width;
-	int						wid_bool;
-	int						acc_bool;
-	int						acc;
-	int						len_return;
+	int						hew;//used
+	int						space;//used
+	int						plus;//used
+	int						minus;//used
+	int						nol;//used
+	int						width;//used
+	int						wid_bool;//used
+	int						acc_bool;//used
+	int						acc;//used
+	int						len_return;//used
 	int						len_flag;
-	int						f;
-	int						neg;
+	int						f;//used
+	int						neg;//used
 	int						temp;
-	int						d;
-	int						ld;
-	long int				num_l;
-	long long int			num_ll;
-	int						num_h;
+	int						d;//used
+	int						ld;//used
+	long int				num_l;//-
+	long long int			num_ll;//-
+	int						num_h;//-
 	int						g_e;
-	char					*num_hh;
+	char					*num_hh;//used
 }							t_pf_list;
 
 int				inffin(long double n, t_pf_list *base);
@@ -65,8 +65,11 @@ int				ft_pars_flag(t_pf_list *base, const char *format);
 int				ft_type_f(const char *format, va_list ap, t_pf_list *base);
 int				ft_type_s(const char *format, va_list ap, int i,
 														t_pf_list *base);
+int				ft_point_flags_u(const char *format, va_list ap, int *i,
+														t_pf_list *base);
 long long int	ft_va_arg_for_d(va_list ap, t_pf_list *base);
-void			ft_magic_base(t_pf_list *base, int len_num, int diff);
+void			ft_magic_base(t_pf_list *base, int diff,
+								long long int num, int len_num);
 int				print_hex(long long int nb, t_pf_list *base);
 void			ft_type_r(va_list ap, t_pf_list *base);														
 int				ft_type_d(va_list ap, t_pf_list *base);
