@@ -32,8 +32,8 @@ int		main()
 //	printf("our = %d\n", ft_printf("\n*%-5.2s is a string*\n", ""));
 //	printf("sys = %d\n", printf("\n*%-5.2s is a string*\n", ""));
 //	printf("%zi\n", 15000);
-	   printf("our - %d\n", ft_printf("\n*%+10.5d*\n", 4242));
-	   printf("sys - %d\n", printf("\n*%+10.5d*\n", 4242));
+	   printf("\nour - %d\n", ft_printf("{% S}", L"(null)"));
+	   printf("\nsys - %d\n", printf("{% S}", L"(null)"));
 	  // -922075808
 //	ft_printf("\n%s\n", "75545");
 

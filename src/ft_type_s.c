@@ -23,9 +23,9 @@ static void	ft_type_s_accuracy(t_pf_list *base)
 		base->acc = 0;
 	while (base->acc > 0 && (!base->temp || base->wid_bool))
 	{
-		if (base->nol)//
-			ft_putchar('0');//
-		else//
+		if (base->nol)
+			ft_putchar('0');
+		else
 			ft_putchar(' ');
 		base->len_return++;
 		base->acc--;
@@ -37,13 +37,12 @@ static void	ft_type_s_precision(t_pf_list *base)
 	int		i;
 
 	i = base->width - base->acc;
-	while (i > 0)
+	while (i-- > 0)
 	{
-	if (base->nol) ///
-		ft_putchar('0');//
-	else//
-		ft_putchar(' ');
-		i--;
+		if (base->nol)
+			ft_putchar('0');
+		else
+			ft_putchar(' ');
 		base->len_return++;
 	}
 	base->width = 0;
@@ -77,7 +76,7 @@ static int	ft_type_c(const char *format, va_list ap, int i, t_pf_list *base)
 
 static void	type_s_helper(char *str, t_pf_list *base)
 {
-	if (str != NULL && !base->acc && !base->acc_bool)
+	if (str && !base->acc && !base->acc_bool)
 		base->acc = ft_strlen(str);
 	else if (str == NULL)
 		base->acc = 6;
@@ -93,13 +92,13 @@ static void	type_s_helper(char *str, t_pf_list *base)
 			base->len_return += base->acc;
 			base->acc = base->width - base->acc;
 		}
-		else if (str == NULL)
+		else if (str == NULL && !base->nol && str != 0)
 		{
 			write(1, "(null)", 6);
 			base->len_return += 6;
-		}
+		}		
 	}
-	if (*str == '\0')
+	if (str != NULL && *str == '\0')
 		base->temp = 1;
 	ft_type_s_accuracy(base);
 }
@@ -111,6 +110,8 @@ int			ft_type_s(const char *format, va_list ap, int i, t_pf_list *base)
 	if (*format == 'c' || *format == 'C' || *format == '%')
 		return (ft_type_c(format, ap, i, base));
 	str = va_arg(ap, char *);
+	if (base->acc_bool && str != NULL && base->acc > (int)ft_strlen(str))
+		base->acc = ft_strlen(str);
 	if (base->acc_bool == 0 && !base->minus && base->wid_bool == 0)
 	{
 		if (str != NULL)
@@ -118,7 +119,7 @@ int			ft_type_s(const char *format, va_list ap, int i, t_pf_list *base)
 			write(1, str, ft_strlen(str));
 			base->len_return += ft_strlen(str);
 		}
-		else
+		else if (str == NULL)
 		{
 			write(1, "(null)", 6);
 			base->len_return += 6;
