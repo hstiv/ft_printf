@@ -6,7 +6,7 @@
 #    By: hharrold <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/21 16:38:05 by hharrold          #+#    #+#              #
-#    Updated: 2019/04/03 19:28:05 by hstiv            ###   ########.fr        #
+#    Updated: 2019/04/02 22:05:29 by hstiv            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,8 +47,7 @@ clean:
 		@make -C $(LFT) fclean
 
 fclean: clean
-		@rm -rf obj	
+		@rm -rf obj 
 		@rm -rf $(NAME)
-		@echo "(•̀ᴗ•́)و $(NAME) removed!".
 
 re: fclean all
