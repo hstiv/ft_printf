@@ -10,31 +10,52 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+//#include <string.h>
 #include <stdio.h>
+//#include <project.h>
+//#include <limits.h>
+//#include <stdlib.h>
+//#include <wchar.h>
+//# include <stddef.h>
 #include "ft_printf.h"
 
 int		main()
-{
-//	char	str[10] = "12345";
-//	printf("%d\n", ft_printf("\n!!!!%*.*i!!!!\n", 8, 3, 12));
-//	printf("our- %d\n", ft_printf("\n*%g*\n", 6645555555555555555576575679845677986455555555555554568.123456));
-//	printf("sys- %d\n", printf("\n*%g*\n", 6644555555555465253674572534534564564566354675237645672354675236754762537642368.123456));
-//	printf("%d\n", printf("\n!!!!%f!!!!\n", 300.87));
-//	printf("%d\n", printf("\n!!!!%*.*lo!!!!\n", 8, 3, 3147483647));55
-//	printf("%d\n", ft_printf("\n*%bs*\n",2));
-//	printf("%d\n", ft_printf("\n%c\n",'f'));
-//	printf("%d\n", printf("\n%с\n",'Э'));
-	// printf("%d\n", ft_printf("\n%*.*lx\n",20, 50, -92207423545808));
-	//    printf("%d\n", printf("\n%*.*lx\n",20, 50, -92207423545808));
-	//    printf("%d\n", ft_printf("\n%*.*x\n",20, 50, -92545808));
-	//    printf("%d\n", printf("\n%*.*x\n",20, 50, -92545808));
-//	printf("our = %d\n", ft_printf("\n*%-5.2s is a string*\n", ""));
-//	printf("sys = %d\n", printf("\n*%-5.2s is a string*\n", ""));
-//	printf("%zi\n", 15000);
-	   printf("\nour - %d\n", ft_printf("{% S}", L"(null)"));
-	   printf("\nsys - %d\n", printf("{% S}", L"(null)"));
-	  // -922075808
+{ 	
+	char c;
+
+	// printf("\n\nTYPE S and s\n");
+	// printf("\n('{%%s}', 0)\n\n");
+	// printf("\nour %d\n", ft_printf("{%s}", 0));
+	// printf("\nsys %d\n", printf("{%s}", 0));
+	// printf("\n");
+	// printf("\n'{%% S}', L'(null)\\n'\n\n'");
+	printf("\nour - %d\n", ft_printf("*%*.*G* %d", 0, 0, 35542313.1244526563, 10));
+	printf("\nsys - %d\n", printf("*%*.*G* %d", 0, 0, 35542313.1244526563, 10));
+	// printf("\n");
+	
+	// printf("\nsys - %d\n", ft_printf("{%f}{%F}", 1.42, 1.42));
+	// printf("\nsys - %d\n", printf("{%f}{%F}", 1.42, 1.42));
+	//ft_printf("\nour{%030S}\n", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+	//printf("\nsys{%030S}\n", L"ÊM-M-^QÊM-^XØ‰∏M-ÂM-^O™ÁM-^L´„M-M-^B");
+
+	// printf("\n'{%%s}', ''\n\n");
+	// printf("\nour - %d\n", ft_printf("{%s}", ""));
+	// printf("\nsys - %d\n", printf("{%s}", ""));
+	// printf("\n");
+
+	// printf("\n\nTYPE all\n");
+	// printf("\n'%%s%%d%%p%%%%%%S%%D%%i%%o%%O%%u%%U%%x%%X%%c%%C','bonjour', 42, &c, L'暖炉', LONG_MAX, 42, 42, 42, 100000, ULONG_MAX, 42, 42, 'c', L'플'\\n\n\n");
+	// printf("\nour %d\n", ft_printf("%s%d%p%%%S%D%i%o%O%u%U%x%X%c%C","bonjour", 42, &c, L"暖炉", LONG_MAX, 42, 42, 42, 100000, ULONG_MAX, 42, 42, 'c', L'플'));
+	//printf("\nsys %d\n", printf("%s%d%p%%%S%D%i%o%O%u%U%x%X%c%C","bonjour", 42, &c, L"暖炉", LONG_MAX, 42, 42, 42, 100000, ULONG_MAX, 42, 42, 'c', L'플'));
+	// printf("\n");
+
+	//printf("\n%d\n", printf("%S", L"米"));
+	// printf("\n%d\n", printf("%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S%S",
+	// L"Α α", L"Β β", L"Γ γ", L"Δ δ", L"Ε ε", L"Ζ ζ", L"Η η", L"Θ θ", L"Ι ι", L"Κ κ", L"Λ λ", L"Μ μ",
+	// L"Ν ν", L"Ξ ξ", L"Ο ο", L"Π π", L"Ρ ρ", L"Σ σ", L"Τ τ", L"Υ υ", L"Φ φ", L"Χ χ", L"Ψ ψ", L"Ω ω", L""));
+	//printf("\n%d\n", printf("%s %C %d %p %x %% %S", "bonjour ", L'該', 42, &free, 42, L"لحم خنزير"));
+ 
+	  /*/ -922075808
 //	ft_printf("\n%s\n", "75545");
 
 //	ft_printf("%% 12345\n%s\n%d\nPU%s %s LU%s\n", "fu", 586, "PA", "i", "PA");
@@ -78,8 +99,9 @@ int		main()
 //	ft_printf("%S\n", L"ݗݜशব");
 //	ft_printf("%s%s\n", "test", "test");
 //	ft_printf("%s%s%s\n", "test", "test", "test");
-	return(0);
-}
 // %[флаги -+ #0 ][ширина][.точность][размер]тип
 
-// %-+ #0*.*s
+// %-+ #0*.*s */
+	return(0);
+}
+

@@ -73,66 +73,44 @@ static int		ft_pars_dot(t_pf_list *base, const char *format, va_list ap)
 	return (i);
 }
 
-static void		ft_www(t_pf_list *base)
-{
-	if (base->plus)
-		base->space = 0;
-	if (base->minus)
-		base->nol = 0;
-}
-
 static int		ft_parse_mod(const char *format, t_pf_list *base)
 {
 	if (*format == 'l')
 	{
 		format++;
+		base->ld = 1;
 		if ((*format) == 'l')
 			base->ld = 2;
-		else
-			base->ld = 1;
-	return (base->ld);
+		return (base->ld);
 	}
 	else if (*format == 'h')
 	{
 		format++;
+		base->d = 1;
 		if ((*format) == 'h')
 			base->d = 2;
+		return (base->d);
+	}
+	else if ((*format) == 'z' || (*format) == 'j')
+	{
+		if ((*format) == 'j')
+			base->ld = 2;
 		else
-			base->d = 1;
-	return (base->d);
-	}
-	else if ((*format) == 'z')
-	{
-		base->f = 100;
+			base->f = 100;
 		return (1);
 	}
-	else if (*format == 'j')
-	{
-		base->ld = 2;
-		return (1);
-	}
-	else
-		return(0); 
-	// return (base->ld + base->d);
+	return (0);
 }
 
 int				ft_fill_flag(t_pf_list *base, const char *format, va_list ap)
 {
 	int	i;
-	int j;
 
-	j = 0;
 	i = 0;
 	if (ft_pars_flag(base, format))
-		ft_www(base);
+		ft_control_flag(base);
 	else if (*format == '.')
-	{
-		j += ft_pars_dot(base, format, ap);
-		if (j == -1)
-			return (-1);
-		format += j;
-		i += j;
-	}
+		i += ft_pars_dot(base, format, ap);
 	else if (*format == '*')
 		ft_num_for_width(base, ap, 1, format);
 	else if (*format >= '0' && *format <= '9')
@@ -141,20 +119,11 @@ int				ft_fill_flag(t_pf_list *base, const char *format, va_list ap)
 		format += ft_numlen(base->width) - 1;
 		i += ft_numlen(base->width) - 1;
 	}
-	else if (*format != 'h' || *format != 'l' || *format != 'j' || *format != 'z')
+	else if (*format != 'h' || *format != 'l' || *format != 'j' ||
+														*format != 'z')
 		i += ft_parse_mod(format, base) - 1;
 	else
-		return (i); // -1
-	if (base->width < 0)
-	{
-		base->width *= -1;
-		base->minus = 1;
-		base->nol = 0;
-	}
-	if (base->acc < 0)
-	{
-		base->acc = 0;
-		base->acc_bool = 0;
-	}
+		return (i);
+	ft_control_flag(base);
 	return (++i);
 }

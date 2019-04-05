@@ -48,6 +48,8 @@ static int		prestr_maker(t_pf_list *base, char *str)
 	i = 0;
 	if (base->neg == '-' || base->plus)
 		base->temp--;
+	(base->nol && base->space && base->neg == '-'s
+						&& base->temp) ? (base->temp++) : 0;
 	if ((base->plus || base->neg == 45) && base->nol)
 		str[i++] = base->neg;
 	if (base->space && !base->nol && !base->plus && base->neg == '+')
@@ -72,6 +74,7 @@ static void		ft_convert_rest(char *s, long double n, t_pf_list *b, int dot)
 {
 	size_t		i;
 
+	(b->minus && b->space && b->neg == '-' && b->acc) ? (b->acc++) : 0;
 	i = prestr_maker(b, s);
 	if ((b->plus || b->neg == '-') && !b->nol)
 		s[i++] = b->neg;

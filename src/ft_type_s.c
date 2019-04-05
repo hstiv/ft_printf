@@ -21,6 +21,8 @@ static void	ft_type_s_accuracy(t_pf_list *base)
 		base->acc = base->width - base->acc;
 	if (base->temp == 1 && !base->minus)
 		base->acc = 0;
+	if (base->acc && base->nol && base->width == -20)
+		base->acc--;
 	while (base->acc > 0 && (!base->temp || base->wid_bool))
 	{
 		if (base->nol)
@@ -50,7 +52,7 @@ static void	ft_type_s_precision(t_pf_list *base)
 
 static int	ft_type_c(const char *format, va_list ap, int i, t_pf_list *base)
 {
-	char	d;
+	unsigned char	d;
 
 	if (*format != '%')
 		d = va_arg(ap, int);
@@ -82,6 +84,7 @@ static void	type_s_helper(char *str, t_pf_list *base)
 		base->acc = 6;
 	else if (base->acc && *str == '\0' && !base->minus)
 		base->acc = 0;
+	(str == 0) ? (base->width = -20) : 0;
 	if ((base->width - base->acc) > 0 && !base->minus)
 		ft_type_s_precision(base);
 	if (base->acc > 0)
@@ -96,10 +99,9 @@ static void	type_s_helper(char *str, t_pf_list *base)
 		{
 			write(1, "(null)", 6);
 			base->len_return += 6;
-		}		
+		}
 	}
-	if (str != NULL && *str == '\0')
-		base->temp = 1;
+	(str != NULL && *str == '\0') ? (base->temp = 1) : 0;
 	ft_type_s_accuracy(base);
 }
 
@@ -112,6 +114,7 @@ int			ft_type_s(const char *format, va_list ap, int i, t_pf_list *base)
 	str = va_arg(ap, char *);
 	if (base->acc_bool && str != NULL && base->acc > (int)ft_strlen(str))
 		base->acc = ft_strlen(str);
+	(str == 0 && base->width && !base->acc) ? (base->wid_bool = 0) : 0;
 	if (base->acc_bool == 0 && !base->minus && base->wid_bool == 0)
 	{
 		if (str != NULL)

@@ -14,7 +14,8 @@
 
 static void				type_g_maker(t_pf_list *b, long double nb, int i)
 {
-	if (i >= 6 && !b->acc_bool && !b->wid_bool)
+	if (i >= 6 && ((!b->acc_bool && !b->wid_bool)
+							|| (!b->acc && !b->width)))
 	{
 		if (!b->acc_bool)
 		{
@@ -42,7 +43,7 @@ static void				ft_tttype_g(long double nb, t_pf_list *base)
 		n *= -1;
 	while ((long long int)n > 9 && ++i)
 		n = n / 10;
-	if (base->wid_bool && base->acc_bool)
+	if (base->wid_bool && base->acc_bool && base->width && base->acc)
 	{
 		if (base->width < base->acc)
 		{

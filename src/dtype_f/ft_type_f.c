@@ -19,7 +19,7 @@ int				ft_type_f(const char *format, va_list ap, t_pf_list *base)
 	int			i;
 
 	i = 0;
-	if (base->d > 0 || base->f > 0)
+	if (base->ld > 0 || base->f > 0)
 	{
 		n = va_arg(ap, double);
 		pf_ftoa(n, base);
@@ -29,10 +29,8 @@ int				ft_type_f(const char *format, va_list ap, t_pf_list *base)
 		nb = va_arg(ap, long double);
 		pf_ftoa(nb, base);
 	}
-	if (base->d > 0 || base->ld > 0)
-		i += 2;
-	else
-		i += 1;
+	if (base->d == 1)
+		i++;
 	format++;
-	return (i);
+	return (++i);
 }
