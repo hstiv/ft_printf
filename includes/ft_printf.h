@@ -46,6 +46,15 @@ typedef struct				s_pf_list
 	char					*num_hh;
 }							t_pf_list;
 
+void						ft_put_space(t_pf_list *base, int len_num);
+void						ft_base_non_min(t_pf_list *base, int diff,
+						unsigned long long int num, int len_num);
+void						ft_base_min(t_pf_list *base, int diff,
+						unsigned long long int num, int len_num);
+void						ft_help_base(t_pf_list *base, int len_num,
+												int diff);
+void						ft_next_step(t_pf_list *base, int len_num,
+												int diff);
 void						ft_type_s_precision(t_pf_list *base);
 void						ft_type_s_accuracy(t_pf_list *base);
 int							inffin(long double n, t_pf_list *base);
@@ -96,4 +105,5 @@ void						ft_for_hew(t_pf_list *base,
 int							ft_for_un_falid(const char *format,
 															t_pf_list *base);
 t_pf_list					*ft_create_pf_list();
+
 #endif

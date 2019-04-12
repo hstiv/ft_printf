@@ -18,7 +18,8 @@ SRC = src/ft_printf.c src/ft_type_s.c src/ft_type_d.c src/dtype_f/inffin.c \
 	  src/dtype_f/rounding.c src/bonus/ft_type_b_e.c src/bonus/ft_type_g.c \
 	  src/ft_numlen_for_prf.c src/ft_va_arg_for_d.c src/ft_magic_base.c \
 	  src/ft_point_flags_x_o.c src/ft_point_flags_u.c src/bonus/ft_type_e_maker.c \
-	  src/ft_control_flag.c src/ft_magi_base.c src/ft_parsing_prnt.c src/s_acc.c
+	  src/ft_control_flag.c src/ft_magi_base.c src/ft_parsing_prnt.c src/s_acc.c \
+	  src/base_min_nonmin.c
 
 HEAD = ./includes/
 
