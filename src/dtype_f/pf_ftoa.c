@@ -41,12 +41,12 @@ static void		afterstr_maker(char *str, t_pf_list *b, size_t i, long double n)
 	write(1, str, ft_strlen(str));
 }
 
-static int		prestr_maker(t_pf_list *base, char *str)
+static int		prestr_maker(t_pf_list *base, char *str, int v)
 {
 	int			i;
 
 	i = 0;
-	if (base->neg == '-' || base->plus)
+	if (base->neg == '-' || base->plus || v)
 		base->temp--;
 	(base->nol && base->space && base->neg == '-'
 						&& base->temp) ? (base->temp++) : 0;
@@ -75,9 +75,10 @@ static void		ft_convert_rest(char *s, long double n, t_pf_list *b, int dot)
 	size_t		i;
 
 	(b->minus && b->space && b->neg == '-' && b->acc) ? (b->acc++) : 0;
-	i = prestr_maker(b, s);
+	i = prestr_maker(b, s, (n == 0.0) ? 1 : 0);
 	if ((b->plus || b->neg == '-') && !b->nol)
 		s[i++] = b->neg;
+	(n == 0.0) ? s[i++] = '0' : 0;
 	while (dot--)
 	{
 		n *= 10;
